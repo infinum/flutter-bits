@@ -2,7 +2,9 @@
 
 A collection of common components and pieces that you can add to your Flutter project.
 
-// list of components goes here
+- [common_state_handling](https://github.com/infinum/Flutter-Bits/blob/master/common_state_handling)
+
+Shows you how to handle common states like loading and error. Built on top of flutter_bloc.
 
 ## Usage
 
