@@ -2,7 +2,7 @@
 
 This sample contains architecture addition to Bloc that can handle showing of the common application states, loading and error.
 
-In the weather example at bloclibrary.dev they for one request for weather they have Bloc states as following:
+In the weather example at bloclibrary.dev, for one request they have Bloc states as following:
 
 ```dart
 abstract class WeatherState extends Equatable {
@@ -29,7 +29,7 @@ class WeatherError extends WeatherState {}
 
 ```
 
-You can see how for every request you will need to add error and loading states, even though they are same states for every request. And in the widget tree they write something like:
+You can see how for every request you will need to add error and loading states, even though they are the same states for every request. And in the widget tree they write something like:
 
 ```dart
 child: BlocBuilder<WeatherBloc, WeatherState>(
@@ -131,7 +131,7 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
           ...
 ```
 
-In same fashion you can build specific error for some requests. If you return `null` the widget will fallback to generic error. That way you can handle just some errors like:
+In the same fashion, you can build specific errors for some requests. If you return `null` the widget will fallback to generic error. That way you can handle just some error like:
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
@@ -153,9 +153,9 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
   equatable: ^1.0.1
 ```
 
-This is built on bloc, so we have default bloc dependencies.
+This is built on the flutter_bloc, so we have default bloc dependencies.
 
 `after_layout`
 
-Since `BlocListener` does not trigger for the initialState, we show loading dialog after the layout (you cannot show dialog during the build phase or initState).
+Since `BlocListener` does not trigger for the initialState, so we show loading dialog after the layout is done (you cannot show dialog during the build phase or initState).
 
