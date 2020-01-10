@@ -3,6 +3,7 @@
 A collection of common components and pieces that you can add to your Flutter project.
 
 - [common_state_handling](https://github.com/infinum/Flutter-Bits/blob/master/common_state_handling)
+- [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 
 Shows you how to handle common states like loading and error. Built on top of flutter_bloc.
 
