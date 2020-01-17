@@ -1,5 +1,5 @@
+import 'package:common_state_handling/architecture/event/bloc_event.dart';
 import 'package:flutter/material.dart';
-import 'package:vecna/bloc/event/bloc_event.dart';
 
 @immutable
 abstract class RequestEvent<T> extends BlocEvent<T>{

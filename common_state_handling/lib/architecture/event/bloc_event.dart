@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:vecna/bloc/event/request_event.dart';
 
 /// Default bloc event to pass
 /// We needed this because of [RequestEvent], to allow more different
