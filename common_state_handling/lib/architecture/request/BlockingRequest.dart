@@ -1,11 +1,11 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:common_state_handling/architecture/widgets/GenericError.dart';
+import 'package:common_state_handling/architecture/widgets/generic_error.dart';
 import 'package:common_state_handling/architecture/widgets/GenericLoading.dart';
 import 'package:common_state_handling/architecture/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../RequestBloc.dart';
+import '../request_bloc.dart';
 
 typedef StateBuilder<T> = Widget Function(BuildContext context, T state);
 

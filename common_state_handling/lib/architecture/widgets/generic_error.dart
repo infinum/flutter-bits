@@ -1,13 +1,14 @@
 
 
+import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
 import 'package:flutter/material.dart';
 
-import '../RequestBloc.dart';
+import '../request_bloc.dart';
 
 class GenericError extends StatelessWidget {
   final bool retryEnabled;
   final Function() onRetry;
-  final RequestError error;
+  final ErrorState error;
 
   const GenericError({Key key, this.error, this.retryEnabled, this.onRetry}) : super(key: key);
 
@@ -19,7 +20,7 @@ class GenericError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Icon(Icons.error, color: Colors.red, size: 50),
-          Text(error.message),
+          Text(error.error.toString()),
           if (retryEnabled)
             FlatButton(onPressed: () {
               assert(onRetry != null, "Widget should implement onRetry callback");

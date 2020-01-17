@@ -1,12 +1,16 @@
 import 'dart:ffi';
 
 import 'package:common_state_handling/architecture/request/BlockingRequest.dart';
+import 'package:common_state_handling/request_snapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'ApiService.dart';
-import 'FetchWeatherBloc.dart';
-import 'architecture/request/InLayoutRequest.dart';
+import 'ApiService.dart';
+import 'architecture/widgets/generic_error.dart';
+import 'architecture/widgets/GenericLoading.dart';
+import 'fetch_weather_bloc.dart';
+import 'architecture/request/in_layout_request.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,14 +50,21 @@ class WeatherCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Card(
-        child: InLayoutRequest<Weather, FetchWeatherBloc>(
-          performRequest: () {
-            BlocProvider.of<FetchWeatherBloc>(context).add(Void);
-          },
-          builder: (context, weather) {
+        child: InLayoutRequestWidget<Weather, FetchWeatherBloc>(
+          BlocProvider.of<FetchWeatherBloc>(context),
+          builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+            if(weather.isLoading){
+              return GenericLoading();
+            }
+
+            if(weather.hasError){
+              return GenericError();
+            }
+
+
             return Container(
                 alignment: Alignment.center,
-                child: Text(weather.condition + " in " + weather.city));
+                child: Text(weather.data.condition + " in " + weather.data.city));
           },
         ),
       ),
