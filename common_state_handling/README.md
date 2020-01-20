@@ -132,11 +132,7 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
       if(weather.hasError){
         return Column(
           children: <Widget>[
-            GenericError(),
-            RaisedButton(
-              onPressed: () => BlocProvider.of<FetchWeatherBloc>(context).makeRequest(),
-              child: Text('RETRY'),
-            ),
+            GenericError(onRetry: () => BlocProvider.of<FetchWeatherBloc>(context).makeRequest()),
           ]
         );
       }
