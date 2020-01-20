@@ -1,6 +1,8 @@
 import 'package:common_state_handling/architecture/request_bloc.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
+import 'package:common_state_handling/architecture/widgets/generic_error.dart';
+import 'package:common_state_handling/architecture/widgets/generic_loading.dart';
 import 'package:common_state_handling/request_snapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,11 +50,11 @@ class InLayoutRequestWidget<E, T extends RequestBloc<E>> extends StatelessWidget
       bloc: bloc,
       builder: (BuildContext context, BlocState<E> state){
         if(state is LoadingState<E>){
-          return builder(context, RequestSnapshot<E>.loading());
+          return builder(context, RequestSnapshot<E>.loading()) ?? GenericLoading();
         }
 
         if(state is ErrorState<E>){
-          return builder(context, RequestSnapshot<E>.withError(state.error));
+          return builder(context, RequestSnapshot<E>.withError(state.error)) ?? GenericError(error: state.error);
         }
 
         if(state is ContentState<E>){

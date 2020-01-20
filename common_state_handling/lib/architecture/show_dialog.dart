@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 /// todo: handle close/cancel callback (depending on the project)
 /// todo: show branded or different Cupertino/Material dialog (depending on the project)
 
-void showInfoDialog(BuildContext context, String title, Widget content, {bool dismissible = true}) {
-  showDialog(
+Future<T> showInfoDialog<T>(BuildContext context, String title, Widget content, {bool dismissible = true}) {
+  return showDialog<T>(
     barrierDismissible: dismissible,
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(title),
           content: content

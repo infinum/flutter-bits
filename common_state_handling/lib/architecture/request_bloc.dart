@@ -4,8 +4,8 @@ import 'package:common_state_handling/architecture/event/request_event.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
 
-import '../ApiService.dart';
-import '../ApiService.dart';
+import '../api_service.dart';
+import '../api_service.dart';
 
 /// Request bloc that has default functionality to call api, parse result
 /// and show error or content after it is finished.

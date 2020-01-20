@@ -1,17 +1,12 @@
-
-
-import 'dart:convert';
-import 'dart:io';
-
 class ApiService {
-  static ApiService _instance;
-  static ApiService instance() {
-    if (_instance == null) {
-      _instance = ApiService();
-    }
+  ApiService._();
 
+  factory ApiService.instance() {
+    _instance ??= ApiService._();
     return _instance;
   }
+
+  static ApiService _instance;
 
   Future<Weather> fetchTeam() {
     return Future.delayed(Duration(milliseconds: 3300), (){
@@ -24,8 +19,8 @@ class ApiService {
 }
 
 class Weather {
+  Weather(this.city, this.condition);
+
   final String city;
   final String condition;
-
-  Weather(this.city, this.condition);
 }

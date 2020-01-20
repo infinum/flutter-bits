@@ -84,12 +84,28 @@ In the widget tree, everything is simplified. You can use `InLayoutRequest<T, Bl
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          performRequest: () {
-            BlocProvider.of<FetchWeatherBloc>(context).add(Void);
-          },
-          builder: (context, weather) {
-            return Text(weather.condition + " in " + weather.city);
-          })
+    BlocProvider.of<FetchWeatherBloc>(context),
+    performRequest: () {
+      BlocProvider.of<FetchWeatherBloc>(context).makeRequest();
+    },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return GenericLoading();
+      }
+    
+      if(weather.hasError){
+        return GenericError();
+      }
+    
+      if(weather.hasData){
+        return Container(
+          alignment: Alignment.center,
+          child: Text(weather.data.condition + " in " + weather.data.city));
+      }
+    
+      return SizedBox.shrink();
+    }
+);
 ```
 
 - And that will result in the following UI:
@@ -100,18 +116,40 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
 
 ![](https://media.giphy.com/media/ZB8LuAr67ViaubCPUx/giphy.gif)
 
-- You can add `retryEnabled` that will call `performRequest` again.
+- You can customize the widget so it will call request again if error is shown and `retry` is clicked.
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          retryEnabled: true,
-          performRequest: () {
-            BlocProvider.of<FetchWeatherBloc>(context).add(Void);
-          },
-          builder: (context, weather) {
-            return Text(weather.condition + " in " + weather.city);
-          },
-        )
+    BlocProvider.of<FetchWeatherBloc>(context),
+    performRequest: () {
+      BlocProvider.of<FetchWeatherBloc>(context).makeRequest();
+    },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return GenericLoading();
+      }
+    
+      if(weather.hasError){
+        return Column(
+          children: <Widget>[
+            GenericError(),
+            RaisedButton(
+              onPressed: () => BlocProvider.of<FetchWeatherBloc>(context).makeRequest(),
+              child: Text('RETRY'),
+            ),
+          ]
+        );
+      }
+    
+      if(weather.hasData){
+        return Container(
+          alignment: Alignment.center,
+          child: Text(weather.data.condition + " in " + weather.data.city));
+      }
+    
+      return SizedBox.shrink();
+    }
+);
 ```
 
 ![](https://media.giphy.com/media/TH6HWYxZiOPdpYUEvO/giphy.gif)
@@ -121,13 +159,16 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
 ![](https://media.giphy.com/media/eKsrN1VnvtBV2oPjKh/giphy.gif)
 
 
-If you need specific loading or error for some requests, you can do that by overriding `buildLoading` or `buildError` parameters:
+If you need specific loading you need widget for `RequestSnapshot.loading` state, if no
+widget is provided default error message will be shown
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          buildLoading: (BuildContext context) {
-            return ScreenSpecificLoading()
-          },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return ScreenSpecificLoadingWidget();
+      }
+    },
           ...
 ```
 
@@ -135,13 +176,15 @@ In the same fashion, you can build specific errors for some requests. If you ret
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          buildError: (BuildContext context, RequestError error) {
-            if (error.code == 403) {
-              return UnathorizedInfo();
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+        if(weather.hasError){
+            if (weather.error.code == 403) {
+              return UnathorizedInfoWidget();
             }
             
             return null;
-          },
+        }
+      },
           ...
 ```         
 
@@ -152,10 +195,3 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
   flutter_bloc: ^2.0.0
   equatable: ^1.0.1
 ```
-
-This is built on the flutter_bloc, so we have default bloc dependencies.
-
-`after_layout`
-
-Since `BlocListener` does not trigger for the initialState, so we show loading dialog after the layout is done (you cannot show dialog during the build phase or initState).
-
