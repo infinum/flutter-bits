@@ -7,11 +7,14 @@ import 'package:common_state_handling/request_snapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// To use [InLayoutRequestWidget] bloc that we pass as [T] has to extend [RequestBloc]
-/// because this layout will only listen for [LoadingState], [ErrorState] and [ContentState]
+/// To use [InLayoutRequestWidget] bloc that we pass [E] as data the bloc [T] returns.
+/// [T] has to extend [RequestBloc] and this widget will only listen for
+/// [LoadingState], [ErrorState] and [ContentState]
 ///
-/// It will send [RequestSnapshot] to the builder, builder should figure out what it
-/// wants to do with that data.
+/// You can only provide layout to [builder] that will be called when [ContentState] is
+/// received to bloc to show the layout.
+///
+/// Everything else is optional.
 ///
 /// [E] is type you want returned.
 /// [MakeRequest] will be called and it needs to parse data to [E], then [ContentState] is called
@@ -39,11 +42,13 @@ class InLayoutRequestWidget<E, T extends RequestBloc<E>>
   /// Builder for successful request
   final SuccessRequestWidgetBuilder<E> builder;
 
-  /// What request should be performed when laying out this widget
-  /// [performRequest] can be null and won't do anything if it is null
+  /// What request should be performed when laying out this widget.
   ///
   /// This will usually be action that will change state of [bloc] and send
   /// new state that [BlocBuilder] will listen to
+  ///
+  /// [performRequest] can be null if the request shouldn't be fired right
+  /// when the widget is to appear on the screen.
   final VoidCallback performRequest;
 
   /// This will enable retry button in case of error which will call either

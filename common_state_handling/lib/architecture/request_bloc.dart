@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:common_state_handling/architecture/event/bloc_event.dart';
 import 'package:common_state_handling/architecture/event/request_event.dart';
+import 'package:common_state_handling/architecture/request/blocking_request.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
 
@@ -10,10 +11,14 @@ import '../api_service.dart';
 /// Request bloc that has default functionality to call api, parse result
 /// and show error or content after it is finished.
 ///
-/// You can use them with [InLayoutRequestWidget] to make whole thing automatic
+/// These request states are:
+/// - [InitialState]
+/// - [LoadingState]
+/// - [ErrorState]
+/// - [ContentState]
 ///
-/// To allow for a lot of flexibility Bloc has default [BlocEvent] and [BlocState] so any new
-/// custom events and states don't have to extend [RequestState] or [RequestEvent]
+/// This is designed to be used with [InLayoutRequestWidget] or
+/// [BlockingRequestWidget] to make whole thing automatic
 abstract class RequestBloc<T> extends Bloc<BlocEvent<T>, BlocState<T>> {
 
   /// Initial state, everything is null and loading is set to false

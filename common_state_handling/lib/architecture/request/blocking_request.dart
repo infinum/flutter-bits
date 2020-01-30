@@ -14,18 +14,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// To use [BlockingRequest] bloc that we pass as [T] has to extend [RequestBloc]
 /// because this layout will only listen for [LoadingState], [ErrorState] and [ContentState]
 ///
-/// It will send [RequestSnapshot] to the builder, builder should figure out what it
-///// wants to do with that data. Unlike [InLayoutRequestWidget] this widget will block rest of the views behind
-/// dialog that can't be dismissed.
+/// You can only provide layout to [builder] that will be called when [ContentState] is
+/// received to bloc to show the layout.
 ///
-/// Custom layout for dialog can be passed with [builder]. For loading and error
-/// Loading and error widgets can be passed as null and they will then be replaced by generic widgets [GenericError] and [GenericLoading]
+/// Everything else is optional. This includes [buildError] and [buildLoading] which
+/// are shown inside the dialog.
 ///
 /// [E] is type you want returned.
 /// [MakeRequest] will be called and it needs to parse data to [E], then [ContentState] is called
 /// with [E] set as it's content. When this widget gets [ContentState] it will send it to
 /// builder with [RequestSnapshot.withData]
 class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget {
+
+  const BlockingRequestWidget(this.bloc, {
+    Key key,
+    @required this.builder,
+    this.performRequest,
+    this.listener,
+    this.buildLoading,
+    this.buildInitial,
+    this.buildError,
+    this.retryEnabled = false,
+    this.onRetry,
+  }) : super(key: key);
 
   /// Bloc that will be put in [BlocBuilder] and we will listen to it's state changes
   /// [T] has to extend [RequestBloc]
@@ -34,11 +45,13 @@ class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget 
   /// Builder for successful request
   final SuccessRequestWidgetBuilder<E> builder;
 
-  /// What request should be performed when laying out this widget
-  /// [performRequest] can be null and won't do anything if it is null
+  /// What request should be performed when laying out this widget.
   ///
   /// This will usually be action that will change state of [bloc] and send
   /// new state that [BlocBuilder] will listen to
+  ///
+  /// [performRequest] can be null if the request shouldn't be fired right
+  /// when the widget is to appear on the screen.
   final VoidCallback performRequest;
 
   /// This will enable retry button in case of error which will call either
@@ -61,18 +74,6 @@ class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget 
   /// Just like [BlocConsumer] you can listen to events to do something other
   /// than building the widget, e.g. showing dialog.
   final BlocWidgetListener<BlocState<E>> listener;
-
-  const BlockingRequestWidget(this.bloc, {
-    Key key,
-    @required this.builder,
-    this.performRequest,
-    this.listener,
-    this.buildLoading,
-    this.buildInitial,
-    this.buildError,
-    this.retryEnabled = false,
-    this.onRetry,
-  }) : super(key: key);
 
   @override
   _BlockingRequestWidgetState<E, T> createState() =>
