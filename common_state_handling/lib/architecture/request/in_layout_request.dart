@@ -1,12 +1,11 @@
+import 'package:common_state_handling/architecture/request/request_widget_mixin.dart';
 import 'package:common_state_handling/architecture/request_bloc.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
-import 'package:common_state_handling/architecture/widgets/generic_error.dart';
 import 'package:common_state_handling/architecture/widgets/generic_loading.dart';
 import 'package:common_state_handling/request_snapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 /// To use [InLayoutRequestWidget] bloc that we pass as [T] has to extend [RequestBloc]
 /// because this layout will only listen for [LoadingState], [ErrorState] and [ContentState]
@@ -18,15 +17,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// [MakeRequest] will be called and it needs to parse data to [E], then [ContentState] is called
 /// with [E] set as it's content. When this widget gets [ContentState] it will send it to
 /// builder with [RequestSnapshot.withData]
-class InLayoutRequestWidget<E, T extends RequestBloc<E>> extends StatelessWidget{
-  const InLayoutRequestWidget(this.bloc, {Key key,
+class InLayoutRequestWidget<E, T extends RequestBloc<E>>
+    extends StatelessWidget with RequestWidgetMixin<E> {
+  const InLayoutRequestWidget(
+    this.bloc, {
+    Key key,
     @required this.builder,
     this.performRequest,
+    this.listener,
+    this.buildLoading,
+    this.buildInitial,
+    this.buildError,
+    this.retryEnabled = false,
+    this.onRetry,
   }) : super(key: key);
 
   /// Bloc that will be put in [BlocBuilder] and we will listen to it's state changes
   /// [T] has to extend [RequestBloc]
   final T bloc;
+
+  /// Builder for successful request
+  final SuccessRequestWidgetBuilder<E> builder;
 
   /// What request should be performed when laying out this widget
   /// [performRequest] can be null and won't do anything if it is null
@@ -35,33 +46,53 @@ class InLayoutRequestWidget<E, T extends RequestBloc<E>> extends StatelessWidget
   /// new state that [BlocBuilder] will listen to
   final VoidCallback performRequest;
 
-  /// [RequestWidgetBuilder] will send [RequestSnapshot] that is like [AsyncSnapshot]
-  /// with one more state. Useful for handling multiple widget states in same widget.
-  final RequestWidgetBuilder<E> builder;
+  /// This will enable retry button in case of error which will call either
+  /// [onRetry] or [performRequest] if specified.
+  final bool retryEnabled;
+
+  /// Called when user clicks onRetry. [retryEnabled] must be set to true.
+  final VoidCallback onRetry;
+
+  /// Builder for loading state
+  final RequestWidgetBuilder<E> buildLoading;
+
+  /// Builder for initial state, before network request is started
+  final RequestWidgetBuilder<E> buildInitial;
+
+  /// Builder for unsuccessful request, all errors will propagate here
+  /// or use common error handling
+  final ErrorRequestWidgetBuilder<E> buildError;
+
+  /// Just like [BlocConsumer] you can listen to events to do something other
+  /// than building the widget, e.g. showing dialog.
+  final BlocWidgetListener<BlocState<E>> listener;
 
   @override
   Widget build(BuildContext context) {
     // If performRequest is not null then execute it
-    if(performRequest != null){
+    if (performRequest != null) {
       performRequest();
     }
 
-    return BlocBuilder<T, BlocState<E>>(
+    return BlocConsumer<T, BlocState<E>>(
       bloc: bloc,
-      builder: (BuildContext context, BlocState<E> state){
-        if(state is LoadingState<E>){
-          return builder(context, RequestSnapshot<E>.loading()) ?? GenericLoading();
+      listenWhen: (previous, current) => listener != null,
+      listener: (context, state) => listener(context, state),
+      builder: (BuildContext context, BlocState<E> state) {
+        if (state is LoadingState<E>) {
+          return (buildLoading != null) ? buildLoading(context) : GenericLoading();
         }
 
-        if(state is ErrorState<E>){
-          return builder(context, RequestSnapshot<E>.withError(state.error)) ?? GenericError(error: state.error);
+        if (state is ErrorState<E>) {
+          return getErrorWidget(context, buildError, state, retryEnabled, onRetry, performRequest);
         }
 
-        if(state is ContentState<E>){
-          return builder(context, RequestSnapshot<E>.withData(state.content));
+        if (state is ContentState<E>) {
+          return builder(context, state.content);
         }
 
-        return builder(context, RequestSnapshot<E>.nothing());
+        assert(state is InitialState<E>, "Received State that is not RequestState");
+        return buildInitial(context);
       },
     );
   }

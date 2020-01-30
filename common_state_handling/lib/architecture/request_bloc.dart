@@ -18,7 +18,7 @@ abstract class RequestBloc<T> extends Bloc<BlocEvent<T>, BlocState<T>> {
 
   /// Initial state, everything is null and loading is set to false
   @override
-  BlocState<T> get initialState => ContentState<T>(null);
+  BlocState<T> get initialState => InitialState<T>();
 
   /// Automatically handles only [MakeRequest] event
   /// all other events are being forwarded to method that has to be overridden  [mapEvent]
@@ -34,7 +34,7 @@ abstract class RequestBloc<T> extends Bloc<BlocEvent<T>, BlocState<T>> {
         yield ErrorState<T>(error, stackTrace);
       }
     }else{
-      mapEvent(event);
+       yield* mapEvent(event);
     }
   }
 

@@ -1,34 +1,38 @@
+import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
 /// This is copy of AsyncSnapshot and AsyncWidgetBuilder with
 /// little modification to make it work better with bloc and with requests
 ///
 /// This has 4 states instead of 3 from [AsyncSnapshot]
-/// [RequestSnapshot.nothing] - nothing has happened, request was not sent and we don't have any data
+/// [RequestSnapshot..initial] - nothing has happened, request was not sent and we don't have any data
 /// [RequestSnapshot.loading] - request has been sent and we are waiting for result
 /// [RequestSnapshot.withData] - request completed successfully and has data
 /// [RequestSnapshot.withError] - request completed unsuccessfully and has error
 
 import 'package:flutter/material.dart';
 
-typedef RequestWidgetBuilder<T> = Widget Function(BuildContext context, RequestSnapshot<T> snapshot);
+//typedef RequestWidgetBuilder<T> = Widget Function(BuildContext context, RequestSnapshot<T> snapshot);
+typedef SuccessRequestWidgetBuilder<T> = Widget Function(BuildContext context, T data);
+typedef RequestWidgetBuilder<T> = Widget Function(BuildContext context);
+typedef ErrorRequestWidgetBuilder<T> = Widget Function(BuildContext context, ErrorState errorState);
 
 /// From [data], [error] only one can have something, and [isLoading] can
 /// be true only if both [data] and [error] are empty
 class RequestSnapshot<T> {
   /// Creates an [RequestSnapshot] with the specified [connectionState],
   /// and optionally either [data] or [error] (but not both).
-  const RequestSnapshot._(this.data, this.error, this.isLoading) :
+  const RequestSnapshot._(this.data, this.error, this.isLoading, this.isInitial) :
       assert(!(data != null && error != null));
 
   /// Creates an [RequestSnapshot] in [ConnectionState.none] with null data and error.
-  const RequestSnapshot.nothing() : this._(null, null, false);
+  const RequestSnapshot.initial() : this._(null, null, false, true);
 
-  const RequestSnapshot.loading() : this._(null, null, true);
+  const RequestSnapshot.loading() : this._(null, null, true, false);
 
   /// Creates an [RequestSnapshot] in the specified [state] and with the specified [data].
-  const RequestSnapshot.withData(T data) : this._(data, null, false);
+  const RequestSnapshot.withData(T data) : this._(data, null, false, false);
 
   /// Creates an [RequestSnapshot] in the specified [state] and with the specified [error].
-  const RequestSnapshot.withError(Object error) : this._(null, error, false);
+  const RequestSnapshot.withError(Object error) : this._(null, error, false, false);
 
   /// The latest data received by the asynchronous computation.
   ///
@@ -40,6 +44,9 @@ class RequestSnapshot<T> {
   /// set to an initial data value specified by the relevant widget. See
   /// [FutureBuilder.initialData] and [StreamBuilder.initialData].
   final T data;
+
+  /// Initial state before event for request is triggered.
+  final bool isInitial;
 
   final bool isLoading;
 

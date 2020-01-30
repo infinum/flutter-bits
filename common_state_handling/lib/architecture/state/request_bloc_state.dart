@@ -7,6 +7,11 @@ abstract class RequestState<T> extends BlocState<T>{
 }
 
 @immutable
+class InitialState<T> extends RequestState<T>{
+  const InitialState({List<T> props}) : super(props);
+}
+
+@immutable
 class LoadingState<T> extends RequestState<T>{
   const LoadingState({List<T> props}) : super(props);
 }

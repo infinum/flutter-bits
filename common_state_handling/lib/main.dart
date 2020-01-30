@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'api_service.dart';
+import 'architecture/request/blocking_request.dart';
 import 'architecture/request/in_layout_request.dart';
 import 'architecture/widgets/generic_error.dart';
 import 'architecture/widgets/generic_loading.dart';
@@ -55,30 +56,21 @@ class WeatherCard extends StatelessWidget {
                 children: <Widget>[
                   Text('Inline with click'),
                   Expanded(
-                    child: InLayoutRequestWidget<Weather, FetchWeatherBloc>(
+                    child: BlockingRequestWidget<Weather, FetchWeatherBloc>(
                       BlocProvider.of<FetchWeatherBloc>(context),
-                      builder: (BuildContext context, RequestSnapshot<Weather> weather) {
-                        if(weather.isLoading){
-                          return GenericLoading();
-                        }
-
-                        if(weather.hasError){
-                          return GenericError();
-                        }
-
-                        if(weather.hasData){
-                          return Container(
+                      builder: (context, weather) {
+                        return Container(
                             alignment: Alignment.center,
-                            child: Text(weather.data.condition + " in " + weather.data.city));
-                        }
-
+                            child: Text(weather.condition + " in " + weather.city));
+                      },
+                      buildInitial: (context) {
                         return InkWell(
                           onTap: (){
                             BlocProvider.of<FetchWeatherBloc>(context).makeRequest();
                           },
                           child: Container(
-                            alignment: Alignment.center,
-                            child: Text('Click here to get weather')),
+                              alignment: Alignment.center,
+                              child: Text('Click here to get weather')),
                         );
                       },
                     ),

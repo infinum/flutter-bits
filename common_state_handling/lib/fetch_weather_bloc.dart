@@ -1,8 +1,11 @@
 
+import 'package:bloc/bloc.dart';
 import 'package:common_state_handling/api_service.dart';
 import 'package:common_state_handling/architecture/event/bloc_event.dart';
 import 'package:common_state_handling/architecture/event/request_event.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
+import 'package:common_state_handling/request_snapshot.dart';
+import 'package:flutter/material.dart';
 
 import 'api_service.dart';
 import 'architecture/request_bloc.dart';
@@ -17,7 +20,9 @@ class FetchWeatherBloc extends RequestBloc<Weather> {
 
   /// Make request and send [MakeRequest] to [LoginBloc]
   /// [MakeRequest] event will be caught in [RequestBloc] and handled there
-  void makeRequest() => add(MakeRequest<Weather>(_makeRequest()));
+  void makeRequest() {
+    add(MakeRequest<Weather>(_makeRequest()));
+  }
 
   /// Any new events that should be mapped by [FetchWeatherBloc], events that
   /// are not parsed by [RequestBloc] are passed here so that any bloc can use and map their
@@ -28,4 +33,5 @@ class FetchWeatherBloc extends RequestBloc<Weather> {
     throw UnimplementedError();
   }
 }
+
 

@@ -10,7 +10,7 @@ class GenericError extends StatelessWidget {
   final Function() onRetry;
   final ErrorState error;
 
-  const GenericError({Key key, this.error, this.retryEnabled, this.onRetry}) : super(key: key);
+  const GenericError({Key key, this.error, this.retryEnabled = false, this.onRetry}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

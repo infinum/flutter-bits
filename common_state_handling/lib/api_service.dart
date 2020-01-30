@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class ApiService {
   ApiService._();
 

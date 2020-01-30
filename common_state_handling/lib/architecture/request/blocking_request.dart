@@ -1,4 +1,5 @@
 import 'package:common_state_handling/architecture/request/in_layout_request.dart';
+import 'package:common_state_handling/architecture/request/request_widget_mixin.dart';
 import 'package:common_state_handling/architecture/request_bloc.dart';
 import 'package:common_state_handling/architecture/show_dialog.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
@@ -14,25 +15,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// because this layout will only listen for [LoadingState], [ErrorState] and [ContentState]
 ///
 /// It will send [RequestSnapshot] to the builder, builder should figure out what it
-/// wants to do with that data. Unlike [InLayoutRequestWidget] this widget will block rest of the views behind
+///// wants to do with that data. Unlike [InLayoutRequestWidget] this widget will block rest of the views behind
 /// dialog that can't be dismissed.
 ///
-/// Custom layout for dialog can be passed with [RequestWidgetBuilder].
+/// Custom layout for dialog can be passed with [builder]. For loading and error
 /// Loading and error widgets can be passed as null and they will then be replaced by generic widgets [GenericError] and [GenericLoading]
 ///
 /// [E] is type you want returned.
 /// [MakeRequest] will be called and it needs to parse data to [E], then [ContentState] is called
 /// with [E] set as it's content. When this widget gets [ContentState] it will send it to
 /// builder with [RequestSnapshot.withData]
-class BlockingRequest<E, T extends RequestBloc<E>> extends StatefulWidget{
-  const BlockingRequest(this.bloc, {Key key,
-    @required this.builder,
-    this.performRequest,
-  }) : super(key: key);
+class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget {
 
   /// Bloc that will be put in [BlocBuilder] and we will listen to it's state changes
   /// [T] has to extend [RequestBloc]
   final T bloc;
+
+  /// Builder for successful request
+  final SuccessRequestWidgetBuilder<E> builder;
 
   /// What request should be performed when laying out this widget
   /// [performRequest] can be null and won't do anything if it is null
@@ -41,58 +41,108 @@ class BlockingRequest<E, T extends RequestBloc<E>> extends StatefulWidget{
   /// new state that [BlocBuilder] will listen to
   final VoidCallback performRequest;
 
-  /// [RequestWidgetBuilder] will send [RequestSnapshot] that is like [AsyncSnapshot]
-  /// with one more state. Useful for handling multiple widget states in same widget.
-  final RequestWidgetBuilder<E> builder;
+  /// This will enable retry button in case of error which will call either
+  /// [onRetry] or [performRequest] if specified.
+  final bool retryEnabled;
+
+  /// Called when user clicks onRetry. [retryEnabled] must be set to true.
+  final VoidCallback onRetry;
+
+  /// Builder for loading state
+  final RequestWidgetBuilder<E> buildLoading;
+
+  /// Builder for initial state, before network request is started
+  final RequestWidgetBuilder<E> buildInitial;
+
+  /// Builder for unsuccessful request, all errors will propagate here
+  /// or use common error handling
+  final ErrorRequestWidgetBuilder<E> buildError;
+
+  /// Just like [BlocConsumer] you can listen to events to do something other
+  /// than building the widget, e.g. showing dialog.
+  final BlocWidgetListener<BlocState<E>> listener;
+
+  const BlockingRequestWidget(this.bloc, {
+    Key key,
+    @required this.builder,
+    this.performRequest,
+    this.listener,
+    this.buildLoading,
+    this.buildInitial,
+    this.buildError,
+    this.retryEnabled = false,
+    this.onRetry,
+  }) : super(key: key);
 
   @override
-  _BlockingRequestState<E, T> createState() => _BlockingRequestState<E, T>();
+  _BlockingRequestWidgetState<E, T> createState() =>
+      _BlockingRequestWidgetState<E, T>();
 }
 
-class _BlockingRequestState<E, T extends RequestBloc<E>> extends State<BlockingRequest<E, T>> {
+class _BlockingRequestWidgetState<E, T extends RequestBloc<E>>
+    extends State<BlockingRequestWidget<E, T>> with RequestWidgetMixin<E> {
+
   bool _dialogShown = false;
 
-  @override
   Widget build(BuildContext context) {
-    // If performRequest is not null then execute it
-    if(widget.performRequest != null){
-      widget.performRequest();
-    }
-
     return BlocListener<T, BlocState<E>>(
-      bloc: widget.bloc,
-      listener: (BuildContext context, BlocState<E> state){
-        // Close any existing dialogs
-        if(_dialogShown){
+      listener: (context, state) {
+        if (_dialogShown) {
           Navigator.pop(context);
-          _dialogShown = false;
         }
 
-        if(state is LoadingState<E>){
-          _showDialog('Loading', widget.builder(context, RequestSnapshot<E>.loading()) ?? GenericLoading());
+        // Optional listener can be provided to this widget, so we call it here
+        if (widget.listener != null) {
+          widget.listener(context, state);
         }
 
-        if(state is ErrorState<E>){
-          _showDialog('Error', widget.builder(context, RequestSnapshot<E>.withError(state.error)) ?? GenericError(error: state.error,));
+        if (state is LoadingState<E>) {
+          final loadingWidget = (widget.buildLoading != null) ? widget
+              .buildLoading(context) : GenericLoading();
+          _showDialog('Loading', loadingWidget);
+        }
+
+        if (state is ErrorState<E>) {
+          final errorWidget = getErrorWidgetWithButton(
+              context, widget.buildError, state, widget.retryEnabled,
+              widget.onRetry, widget.performRequest, () {
+            Navigator.pop(context);
+          });
+          _showDialog('Error', errorWidget, dismissible: true);
         }
       },
-      child: BlocBuilder<T, BlocState<E>>(
-        bloc: widget.bloc,
-        builder: (BuildContext context, BlocState<E> state){
-          if(state is ContentState<E>){
-            return widget.builder(context, RequestSnapshot<E>.withData(state.content));
-          }
-
-          return widget.builder(context, RequestSnapshot<E>.nothing());
-        },
-      ),
+      child: _buildWidget(context),
     );
   }
 
-  Future<T> _showDialog<T>(String title, Widget child) async {
+  Widget _buildWidget(BuildContext context) {
+    // If performRequest is not null then execute it
+    if (widget.performRequest != null) {
+      widget.performRequest();
+    }
+
+    return BlocBuilder<T, BlocState<E>>(
+      bloc: widget.bloc,
+      builder: (BuildContext context, BlocState<E> state) {
+        if (state is ContentState<E>) {
+          return widget.builder(context, state.content);
+        }
+
+        if (widget.buildInitial == null) {
+          return SizedBox.shrink();
+        } else {
+          return widget.buildInitial(context);
+        }
+      },
+    );
+  }
+
+
+  Future<T> _showDialog<T>(String title, Widget child, { bool dismissible = false}) async {
     _dialogShown = true;
-    final T content = await showInfoDialog<T>(context, title, child, dismissible: false);
+    final T content = await showInfoDialog<T>(context, title, child, dismissible: dismissible);
     _dialogShown = false;
     return content;
   }
+
 }
