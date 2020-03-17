@@ -20,8 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// [MakeRequest] will be called and it needs to parse data to [E], then [ContentState] is called
 /// with [E] set as it's content. When this widget gets [ContentState] it will send it to
 /// builder with [RequestSnapshot.withData]
-class InLayoutRequestWidget<E, T extends RequestBloc<E>>
-    extends StatelessWidget with RequestWidgetMixin<E> {
+class InLayoutRequestWidget<E, T extends RequestBloc<E>> extends StatelessWidget with RequestWidgetMixin<E> {
   const InLayoutRequestWidget(
     this.bloc, {
     Key key,
@@ -84,15 +83,15 @@ class InLayoutRequestWidget<E, T extends RequestBloc<E>>
       listenWhen: (previous, current) => listener != null,
       listener: (context, state) => listener(context, state),
       builder: (BuildContext context, BlocState<E> state) {
-        if (state is LoadingState<E>) {
+        if (state is Loading<E>) {
           return (buildLoading != null) ? buildLoading(context) : GenericLoading();
         }
 
-        if (state is ErrorState<E>) {
+        if (state is ErrorDetails<E>) {
           return getErrorWidget(context, buildError, state, retryEnabled, onRetry, performRequest);
         }
 
-        if (state is ContentState<E>) {
+        if (state is Content<E>) {
           return builder(context, state.content);
         }
 

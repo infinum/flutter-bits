@@ -1,4 +1,5 @@
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
+
 /// This is copy of AsyncSnapshot and AsyncWidgetBuilder with
 /// little modification to make it work better with bloc and with requests
 ///
@@ -13,15 +14,15 @@ import 'package:flutter/material.dart';
 //typedef RequestWidgetBuilder<T> = Widget Function(BuildContext context, RequestSnapshot<T> snapshot);
 typedef SuccessRequestWidgetBuilder<T> = Widget Function(BuildContext context, T data);
 typedef RequestWidgetBuilder<T> = Widget Function(BuildContext context);
-typedef ErrorRequestWidgetBuilder<T> = Widget Function(BuildContext context, ErrorState errorState);
+typedef ErrorRequestWidgetBuilder<T> = Widget Function(BuildContext context, ErrorDetails<T> errorState);
 
 /// From [data], [error] only one can have something, and [isLoading] can
 /// be true only if both [data] and [error] are empty
 class RequestSnapshot<T> {
   /// Creates an [RequestSnapshot] with the specified [connectionState],
   /// and optionally either [data] or [error] (but not both).
-  const RequestSnapshot._(this.data, this.error, this.isLoading, this.isInitial) :
-      assert(!(data != null && error != null));
+  const RequestSnapshot._(this.data, this.error, this.isLoading, this.isInitial)
+      : assert(!(data != null && error != null));
 
   /// Creates an [RequestSnapshot] in [ConnectionState.none] with null data and error.
   const RequestSnapshot.initial() : this._(null, null, false, true);
@@ -55,10 +56,8 @@ class RequestSnapshot<T> {
   /// Throws [error], if [hasError]. Throws [StateError], if neither [hasData]
   /// nor [hasError].
   T get requireData {
-    if (hasData)
-      return data;
-    if (hasError)
-      throw error;
+    if (hasData) return data;
+    if (hasError) throw error;
     throw StateError('Snapshot has neither data nor error');
   }
 
@@ -88,12 +87,8 @@ class RequestSnapshot<T> {
 
   @override
   bool operator ==(Object other) {
-    if (identical(this, other))
-      return true;
-    return other is RequestSnapshot<T>
-      && other.isLoading == isLoading
-      && other.data == data
-      && other.error == error;
+    if (identical(this, other)) return true;
+    return other is RequestSnapshot<T> && other.isLoading == isLoading && other.data == data && other.error == error;
   }
 
   @override

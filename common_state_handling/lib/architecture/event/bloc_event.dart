@@ -8,11 +8,4 @@ import 'package:flutter/material.dart';
 /// [BlocEvent] will handle [Equatable] and [props] and fill them with default
 /// data.
 @immutable
-abstract class BlocEvent<T> extends Equatable{
-  const BlocEvent([this._props]);
-
-  final List<T> _props;
-
-  @override
-  List<T> get props => _props ?? <T>[];
-}
+abstract class BlocEvent<T> {}

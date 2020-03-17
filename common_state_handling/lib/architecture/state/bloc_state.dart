@@ -8,11 +8,4 @@ import 'package:flutter/material.dart';
 /// [BlocState] will handle [Equatable] and [props] and fill them with default
 /// data.
 @immutable
-abstract class BlocState<T> extends Equatable{
-  const BlocState([this._props]);
-
-  final List<T> _props;
-
-  @override
-  List<T> get props => _props ?? <T>[];
-}
+abstract class BlocState<T> {}

@@ -1,15 +1,12 @@
-import 'package:common_state_handling/architecture/request/in_layout_request.dart';
 import 'package:common_state_handling/architecture/request/request_widget_mixin.dart';
 import 'package:common_state_handling/architecture/request_bloc.dart';
 import 'package:common_state_handling/architecture/show_dialog.dart';
 import 'package:common_state_handling/architecture/state/bloc_state.dart';
 import 'package:common_state_handling/architecture/state/request_bloc_state.dart';
-import 'package:common_state_handling/architecture/widgets/generic_error.dart';
 import 'package:common_state_handling/architecture/widgets/generic_loading.dart';
 import 'package:common_state_handling/request_snapshot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 /// To use [BlockingRequest] bloc that we pass as [T] has to extend [RequestBloc]
 /// because this layout will only listen for [LoadingState], [ErrorState] and [ContentState]
@@ -25,8 +22,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// with [E] set as it's content. When this widget gets [ContentState] it will send it to
 /// builder with [RequestSnapshot.withData]
 class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget {
-
-  const BlockingRequestWidget(this.bloc, {
+  const BlockingRequestWidget(
+    this.bloc, {
     Key key,
     @required this.builder,
     this.performRequest,
@@ -76,13 +73,11 @@ class BlockingRequestWidget<E, T extends RequestBloc<E>> extends StatefulWidget 
   final BlocWidgetListener<BlocState<E>> listener;
 
   @override
-  _BlockingRequestWidgetState<E, T> createState() =>
-      _BlockingRequestWidgetState<E, T>();
+  _BlockingRequestWidgetState<E, T> createState() => _BlockingRequestWidgetState<E, T>();
 }
 
-class _BlockingRequestWidgetState<E, T extends RequestBloc<E>>
-    extends State<BlockingRequestWidget<E, T>> with RequestWidgetMixin<E> {
-
+class _BlockingRequestWidgetState<E, T extends RequestBloc<E>> extends State<BlockingRequestWidget<E, T>>
+    with RequestWidgetMixin<E> {
   bool _dialogShown = false;
 
   Widget build(BuildContext context) {
@@ -97,19 +92,17 @@ class _BlockingRequestWidgetState<E, T extends RequestBloc<E>>
           widget.listener(context, state);
         }
 
-        if (state is LoadingState<E>) {
-          final loadingWidget = (widget.buildLoading != null) ? widget
-              .buildLoading(context) : GenericLoading();
-          _showDialog('Loading', loadingWidget);
+        if (state is Loading<E>) {
+          final loadingWidget = (widget.buildLoading != null) ? widget.buildLoading(context) : GenericLoading();
+          _showDialog<void>('Loading', loadingWidget);
         }
 
-        if (state is ErrorState<E>) {
+        if (state is ErrorDetails<E>) {
           final errorWidget = getErrorWidgetWithButton(
-              context, widget.buildError, state, widget.retryEnabled,
-              widget.onRetry, widget.performRequest, () {
+              context, widget.buildError, state, widget.retryEnabled, widget.onRetry, widget.performRequest, () {
             Navigator.pop(context);
           });
-          _showDialog('Error', errorWidget, dismissible: true);
+          _showDialog<void>('Error', errorWidget, dismissible: true);
         }
       },
       child: _buildWidget(context),
@@ -125,7 +118,7 @@ class _BlockingRequestWidgetState<E, T extends RequestBloc<E>>
     return BlocBuilder<T, BlocState<E>>(
       bloc: widget.bloc,
       builder: (BuildContext context, BlocState<E> state) {
-        if (state is ContentState<E>) {
+        if (state is Content<E>) {
           return widget.builder(context, state.content);
         }
 
@@ -138,12 +131,10 @@ class _BlockingRequestWidgetState<E, T extends RequestBloc<E>>
     );
   }
 
-
-  Future<T> _showDialog<T>(String title, Widget child, { bool dismissible = false}) async {
+  Future<T> _showDialog<T>(String title, Widget child, {bool dismissible = false}) async {
     _dialogShown = true;
     final T content = await showInfoDialog<T>(context, title, child, dismissible: dismissible);
     _dialogShown = false;
     return content;
   }
-
 }
