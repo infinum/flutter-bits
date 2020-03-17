@@ -191,3 +191,37 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
   flutter_bloc: ^2.0.0
   equatable: ^1.0.1
 ```
+
+## Freezed
+
+#### Generation
+To generate freezed class run: 
+```bash
+flutter pub pub run build_runner build  
+```
+
+If you want to you can also run:
+```bash
+flutter pub pub run build_runner watch
+```
+This will watch for changes and rebuild the code once something has been changed.
+
+#### Usage
+You will need 3 imports for freezed class:
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part '<current_file_name_without .dart>.freezed.dart';
+```
+After that you can make you abstract class or union, add `@freezed` annotation, add `with _$<class_name>` and make required factories like this: 
+```dart
+@freezed
+abstract class Union<T> with _$Union<T> {
+  factory Union.initial() = Initial<T>;
+  factory Union.loading() = Loading<T>;
+  factory Union.error(Object error) = Error<T>;
+  factory Union.data(T data) = Data<T>;
+}
+```
+> Note: `_$<class_name>` and `<current_file_name_without .dart>.freezed.dart` won't exist until you run freezed generation
