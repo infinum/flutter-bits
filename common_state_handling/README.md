@@ -84,12 +84,28 @@ In the widget tree, everything is simplified. You can use `InLayoutRequest<T, Bl
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          performRequest: () {
-            BlocProvider.of<FetchWeatherBloc>(context).add(Void);
-          },
-          builder: (context, weather) {
-            return Text(weather.condition + " in " + weather.city);
-          })
+    BlocProvider.of<FetchWeatherBloc>(context),
+    performRequest: () {
+      BlocProvider.of<FetchWeatherBloc>(context).makeRequest();
+    },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return GenericLoading();
+      }
+    
+      if(weather.hasError){
+        return GenericError();
+      }
+    
+      if(weather.hasData){
+        return Container(
+          alignment: Alignment.center,
+          child: Text(weather.data.condition + " in " + weather.data.city));
+      }
+    
+      return SizedBox.shrink();
+    }
+);
 ```
 
 - And that will result in the following UI:
@@ -100,18 +116,36 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
 
 ![](https://media.giphy.com/media/ZB8LuAr67ViaubCPUx/giphy.gif)
 
-- You can add `retryEnabled` that will call `performRequest` again.
+- You can customize the widget so it will call request again if error is shown and `retry` is clicked.
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          retryEnabled: true,
-          performRequest: () {
-            BlocProvider.of<FetchWeatherBloc>(context).add(Void);
-          },
-          builder: (context, weather) {
-            return Text(weather.condition + " in " + weather.city);
-          },
-        )
+    BlocProvider.of<FetchWeatherBloc>(context),
+    performRequest: () {
+      BlocProvider.of<FetchWeatherBloc>(context).makeRequest();
+    },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return GenericLoading();
+      }
+    
+      if(weather.hasError){
+        return Column(
+          children: <Widget>[
+            GenericError(onRetry: () => BlocProvider.of<FetchWeatherBloc>(context).makeRequest()),
+          ]
+        );
+      }
+    
+      if(weather.hasData){
+        return Container(
+          alignment: Alignment.center,
+          child: Text(weather.data.condition + " in " + weather.data.city));
+      }
+    
+      return SizedBox.shrink();
+    }
+);
 ```
 
 ![](https://media.giphy.com/media/TH6HWYxZiOPdpYUEvO/giphy.gif)
@@ -121,13 +155,16 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
 ![](https://media.giphy.com/media/eKsrN1VnvtBV2oPjKh/giphy.gif)
 
 
-If you need specific loading or error for some requests, you can do that by overriding `buildLoading` or `buildError` parameters:
+If you need specific loading you need widget for `RequestSnapshot.loading` state, if no
+widget is provided default error message will be shown
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          buildLoading: (BuildContext context) {
-            return ScreenSpecificLoading()
-          },
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+      if(weather.isLoading){
+        return ScreenSpecificLoadingWidget();
+      }
+    },
           ...
 ```
 
@@ -135,13 +172,15 @@ In the same fashion, you can build specific errors for some requests. If you ret
 
 ```dart
 InLayoutRequest<Weather, FetchWeatherBloc>(
-          buildError: (BuildContext context, RequestError error) {
-            if (error.code == 403) {
-              return UnathorizedInfo();
+    builder: (BuildContext context, RequestSnapshot<Weather> weather) {
+        if(weather.hasError){
+            if (weather.error.code == 403) {
+              return UnathorizedInfoWidget();
             }
             
             return null;
-          },
+        }
+      },
           ...
 ```         
 
@@ -153,9 +192,36 @@ InLayoutRequest<Weather, FetchWeatherBloc>(
   equatable: ^1.0.1
 ```
 
-This is built on the flutter_bloc, so we have default bloc dependencies.
+## Freezed
 
-`after_layout`
+#### Generation
+To generate freezed class run: 
+```bash
+flutter pub pub run build_runner build  
+```
 
-Since `BlocListener` does not trigger for the initialState, so we show loading dialog after the layout is done (you cannot show dialog during the build phase or initState).
+If you want to you can also run:
+```bash
+flutter pub pub run build_runner watch
+```
+This will watch for changes and rebuild the code once something has been changed.
 
+#### Usage
+You will need 3 imports for freezed class:
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part '<current_file_name_without .dart>.freezed.dart';
+```
+After that you can make you abstract class or union, add `@freezed` annotation, add `with _$<class_name>` and make required factories like this: 
+```dart
+@freezed
+abstract class Union<T> with _$Union<T> {
+  factory Union.initial() = Initial<T>;
+  factory Union.loading() = Loading<T>;
+  factory Union.error(Object error) = Error<T>;
+  factory Union.data(T data) = Data<T>;
+}
+```
+> Note: `_$<class_name>` and `<current_file_name_without .dart>.freezed.dart` won't exist until you run freezed generation

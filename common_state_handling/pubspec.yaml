@@ -20,14 +20,19 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bloc: ^2.0.0
-  flutter_bloc: ^2.0.0
-  equatable: ^1.0.1
-  after_layout: any
+  bloc: ^3.0.0
+  flutter_bloc: ^3.2.0
+  equatable: ^1.1.1
+  freezed_annotation: ^0.7.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  bloc_test: ^4.0.0
+  freezed: ^0.9.2
+  build_runner: ^1.8.0
+  mockito: ^4.1.1
+
 
 
 # For information on the generic Dart part of this file, see the
