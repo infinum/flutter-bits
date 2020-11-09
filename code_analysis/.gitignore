@@ -13,7 +13,8 @@
 *.iml
 *.ipr
 *.iws
-.idea/
+.idea/*
+!.idea/runConfigurations
 
 # VS Code related
 .vscode/
