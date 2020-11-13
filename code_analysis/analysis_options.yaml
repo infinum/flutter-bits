@@ -2,22 +2,114 @@ analyzer:
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
+  exclude:
+  - "bin/cache/**"
+  - "lib/util/localization/initialize_i18n/**"
+  - "lib/assets.dart"
+  - "lib/**/*.g.dart"
+  - "lib/**/*.freezed.dart"
+  - "test/**"
   errors:
+    # -- Analizer --
     missing_required_param: warning
     missing_return: warning
-    # allow having TODOs in the code
     todo: ignore
     # Ignore analyzer hints for updating pubspecs when using Future or
     # Stream and not importing dart:async
     # Please see https://github.com/flutter/flutter/pull/24528 for details.
     sdk_version_async_exported_from_core: ignore
-  exclude:
-    - "bin/cache/**"
-    - "lib/util/localization/initialize_i18n/**"
-    - "lib/assets.dart"
-    - "lib/**/*.g.dart"
-    - "lib/**/*.freezed.dart"
-    - "test/**"
+    # -- Linter --
+    always_declare_return_types: info
+    always_put_control_body_on_new_line: info
+    always_require_non_null_named_parameters: info
+    annotate_overrides: info
+    avoid_bool_literals_in_conditional_expressions: info
+    avoid_empty_else: info
+    avoid_field_initializers_in_const_classes: info
+    avoid_init_to_null: info
+    avoid_null_checks_in_equality_operators: info
+    avoid_relative_lib_imports: info
+    avoid_renaming_method_parameters: info
+    avoid_return_types_on_setters: info
+    avoid_returning_null_for_void: info
+    avoid_slow_async_io: info
+    avoid_types_as_parameter_names: info
+    avoid_unused_constructor_parameters: info
+    avoid_void_async: info
+    await_only_futures: info
+    camel_case_extensions: info
+    camel_case_types: info
+    cancel_subscriptions: info
+    control_flow_in_finally: info
+    directives_ordering: info
+    empty_catches: info
+    empty_constructor_bodies: info
+    empty_statements: info
+    flutter_style_todos: info
+    hash_and_equals: info
+    implementation_imports: info
+    iterable_contains_unrelated_type: info
+    library_names: info
+    library_prefixes: info
+    list_remove_unrelated_type: info
+    no_adjacent_strings_in_list: info
+    no_duplicate_case_values: info
+    non_constant_identifier_names: info
+    overridden_fields: info
+    package_api_docs: info
+    package_names: info
+    package_prefixed_library_names: info
+    prefer_adjacent_string_concatenation: info
+    prefer_asserts_in_initializer_lists: info
+    prefer_collection_literals: info
+    prefer_conditional_assignment: info
+    prefer_const_constructors: info
+    prefer_const_constructors_in_immutables: info
+    prefer_const_declarations: info
+    prefer_const_literals_to_create_immutables: info
+    prefer_contains: info
+    prefer_equal_for_default_values: info
+    prefer_final_fields: info
+    prefer_final_in_for_each: info
+    prefer_final_locals: info
+    prefer_for_elements_to_map_fromIterable: info
+    prefer_foreach: info
+    prefer_generic_function_type_aliases: info
+    prefer_if_elements_to_conditional_expressions: info
+    prefer_if_null_operators: info
+    prefer_initializing_formals: info
+    prefer_inlined_adds: info
+    prefer_is_empty: info
+    prefer_is_not_empty: info
+    prefer_is_not_operator: info
+    prefer_iterable_whereType: info
+    prefer_single_quotes: info
+    prefer_spread_collections: info
+    prefer_typing_uninitialized_variables: info
+    prefer_void_to_null: info
+    recursive_getters: info
+    slash_for_doc_comments: info
+    sort_constructors_first: info
+    sort_pub_dependencies: info
+    sort_unnamed_constructors_first: info
+    test_types_in_equals: info
+    throw_in_finally: info
+    type_init_formals: info
+    unnecessary_brace_in_string_interps: info
+    unnecessary_const: info
+    unnecessary_getters_setters: info
+    unnecessary_new: info
+    unnecessary_null_aware_assignments: info
+    unnecessary_null_in_if_null_operators: info
+    unnecessary_overrides: info
+    unnecessary_parenthesis: info
+    unnecessary_statements: info
+    unnecessary_this: info
+    unrelated_type_equality_checks: info
+    use_full_hex_values_for_flutter_colors: info
+    use_rethrow_when_possible: info
+    valid_regexps: info
+    void_checks: info
 
 linter:
   rules:
