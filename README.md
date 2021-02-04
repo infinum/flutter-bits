@@ -6,8 +6,6 @@ A collection of common components and pieces that you can add to your Flutter pr
 - [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 
-Shows you how to handle common states like loading and error. Built on top of flutter_bloc.
-
 ## Usage
 
 Like some other [collections](https://github.com/gskinnerTeam/flutter_vignettes) this repo is designed to contain multiple flutter projects (one project per sample).
