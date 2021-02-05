@@ -3,7 +3,14 @@
 A collection of common components and pieces that you can add to your Flutter project.
 
 - [Look](https://github.com/infinum/Flutter-Bits/blob/master/look)
+Handle app styling
+
 - [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
+Handle API request states
+
+- [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
+Handle device permissions
+
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 
 ## Usage
