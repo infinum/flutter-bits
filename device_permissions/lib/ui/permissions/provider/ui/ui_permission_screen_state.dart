@@ -1,0 +1,1 @@
+enum UiPermissionScreenState { showGrantPermission, showPermanentlyDenied }
