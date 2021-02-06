@@ -11,6 +11,9 @@ Handle API request states
 - [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
 Handle device permissions
 
+- [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
+Widget for easier stream listening. Useful when controlling navigation and dialogs from provider
+
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 
 ## Usage
