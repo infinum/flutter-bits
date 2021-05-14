@@ -41,7 +41,7 @@ class IOSPermissionsManager implements DevicePermissionsManager {
       case PermissionStatus.restricted:
         return DevicePermissionStatus.permanently_denied;
       case PermissionStatus.permanentlyDenied:
-        throw Error(); // Only applicable on Android
+        return DevicePermissionStatus.permanently_denied;
     }
     throw Error();
   }
