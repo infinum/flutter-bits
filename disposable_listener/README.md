@@ -40,4 +40,4 @@ instantiate completer and send it to UI, the UI can await navigation and return 
   }
 ```
 
-Full example is available at /device_permission/lib/ui/home.
+Full example is available at https://github.com/infinum/flutter-bits/tree/master/device_permissions/lib/ui/home
