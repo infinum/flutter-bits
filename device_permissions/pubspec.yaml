@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  permission_handler: ^5.0.0+hotfix.6
+  permission_handler: ^7.0.0
   get_it: ^5.0.1
   provider: ^4.0.4
   rxdart: ^0.24.0

@@ -33,8 +33,8 @@ class IOSPermissionsManager implements DevicePermissionsManager {
 
   DevicePermissionStatus _mapToDevicePermissionStatus(PermissionStatus permissionStatus) {
     switch (permissionStatus) {
-      case PermissionStatus.undetermined:
-        return DevicePermissionStatus.undetermined;
+      case PermissionStatus.limited:
+        return DevicePermissionStatus.limited;
       case PermissionStatus.granted:
         return DevicePermissionStatus.granted;
       case PermissionStatus.denied:
