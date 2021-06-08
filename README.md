@@ -28,6 +28,11 @@ Like some other [collections](https://github.com/gskinnerTeam/flutter_vignettes)
 
 ## Contributing
 
+### Small code snippet (one or two files)
+- Go to the root of the project and create new directory
+- Add README.md and descibe the snippet. Also add link to this README.
+
+### Some feature (full project)
 - Go to the root of the project and create new sample by creating new flutter project `flutter create my_new_flutter_bit`
 - Write the code inside that project and keep in mind that purpose of that code is to be read by others, so keep it nice and clean.
 - Write the README inside your project and explain in short what is it and how everything works. Include the video or screenshot if the feature can be visually represented.
