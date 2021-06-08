@@ -8,8 +8,13 @@ class AndroidPermissionsManager implements DevicePermissionsManager {
     }
 
     final permission = _mapToPermission(devicePermission);
-    final permissionStatus = await permission.status;
-    return _mapToDevicePermissionStatus(permissionStatus);
+    PermissionStatus permissionStatus = await permission.status;
+    if (permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await permission.request();
+      return _mapToDevicePermissionStatus(permissionStatus);
+    } else {
+      return _mapToDevicePermissionStatus(permissionStatus);
+    }
   }
 
   @override
@@ -50,8 +55,8 @@ class AndroidPermissionsManager implements DevicePermissionsManager {
 
   DevicePermissionStatus _mapToDevicePermissionStatus(PermissionStatus permissionStatus) {
     switch (permissionStatus) {
-      case PermissionStatus.undetermined:
-        return DevicePermissionStatus.undetermined;
+      case PermissionStatus.limited:
+        throw Error(); // Only applicable on iOS
       case PermissionStatus.granted:
         return DevicePermissionStatus.granted;
       case PermissionStatus.denied:

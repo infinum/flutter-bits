@@ -4,5 +4,5 @@ enum DevicePermissionStatus {
   denied,
   granted,
   permanently_denied,
-  undetermined,
+  limited,
 }

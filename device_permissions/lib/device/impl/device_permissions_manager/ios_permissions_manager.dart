@@ -33,15 +33,15 @@ class IOSPermissionsManager implements DevicePermissionsManager {
 
   DevicePermissionStatus _mapToDevicePermissionStatus(PermissionStatus permissionStatus) {
     switch (permissionStatus) {
-      case PermissionStatus.undetermined:
-        return DevicePermissionStatus.undetermined;
+      case PermissionStatus.limited:
+        return DevicePermissionStatus.limited;
       case PermissionStatus.granted:
         return DevicePermissionStatus.granted;
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
         return DevicePermissionStatus.permanently_denied;
       case PermissionStatus.permanentlyDenied:
-        throw Error(); // Only applicable on Android
+        return DevicePermissionStatus.permanently_denied;
     }
     throw Error();
   }
