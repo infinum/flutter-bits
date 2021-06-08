@@ -16,7 +16,7 @@ class FirebaseLogPrinter extends LogPrinter {
     }
 
     if (record.level.priority >= LogLevel.error.priority) {
-      FlavorConfig.submitError(record.error, stackTrace: record.stackTrace);sdf
+      FlavorConfig.submitError(record.error, stackTrace: record.stackTrace);
     } else {
       final time = record.time.toIso8601String().split('T')[1];
       final callerFrame = record.callerFrame == null ? '-' : '(${record.callerFrame.location})';
