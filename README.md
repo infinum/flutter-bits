@@ -11,7 +11,7 @@ Handle API request states
 - [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
 Handle device permissions
 
-- [Init Proivder Hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
+- [Init Provider Hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
 useInitProvider hook that gives callback to initialize providers
 
 - [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
