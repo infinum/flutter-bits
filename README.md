@@ -5,20 +5,27 @@ A collection of common components and pieces that you can add to your Flutter pr
 - [Look](https://github.com/infinum/Flutter-Bits/blob/master/look)
 Handle app styling
 
-- [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
-Handle API request states
-
 - [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
 Handle device permissions
+
+- [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
+Loggy addition that logs to crashlytics.
+
+#### Provider and Riverpod
 
 - [Init Provider Hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
 useInitProvider hook that gives callback to initialize providers
 
+- [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
+Handle API request states
+
+- [ProviderKeepAlive](https://github.com/infinum/flutter-bits/tree/master/provider_keep_alive)
+Utility widget to ensure providers are not disposed as long as this widget is in the widget tree.
+
 - [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
 Widget for easier stream listening. Useful when controlling navigation and dialogs from provider
 
-- [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
-Loggy addition that logs to crashlytics.
+#### Gists, snippets and other resources
 
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 
