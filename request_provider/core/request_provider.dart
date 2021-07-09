@@ -19,12 +19,12 @@ abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
 
   bool _mounted = true;
 
-  set _state(RequestState<Value, Exception> state) {
+  set _state(RequestState<Value, Exception> newState) {
     if (newState == _requestState) {
       return;
     }
     
-    _requestState = state;
+    _requestState = newState;
 
     if (_mounted) {
       notifyListeners();
