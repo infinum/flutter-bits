@@ -14,13 +14,13 @@ Loggy addition that logs to crashlytics.
 #### Provider and Riverpod
 
 - [Init Provider Hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
-useInitProvider hook that gives callback to initialize providers
+`useInitProvider` hook that gives callback to initialize providers
 
 - [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
 Handle API request states
 
-- [ProviderKeepAlive](https://github.com/infinum/flutter-bits/tree/master/provider_keep_alive)
-Utility widget to ensure providers are not disposed as long as this widget is in the widget tree.
+- [Provider Keep Alive Hook](https://github.com/infinum/flutter-bits/tree/master/provider_keep_alive_hook)
+`useProviderKeepAlive` hook that ensures provider is not disposed as long as the hook is in the widget tree
 
 - [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
 Widget for easier stream listening. Useful when controlling navigation and dialogs from provider
