@@ -1,5 +1,7 @@
 # Flutter-Bits
 
+<img width="640" alt="OG Flutter Bits_2 (1)" src="https://user-images.githubusercontent.com/5460328/129521694-813cafba-68ca-49d8-a55e-5bbd3af58eb3.png">
+
 A collection of common components and pieces that you can add to your Flutter project.
 
 - [Look](https://github.com/infinum/Flutter-Bits/blob/master/look)
