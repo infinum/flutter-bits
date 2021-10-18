@@ -39,5 +39,5 @@ app.*.symbols
 app.*.map.json
 
 # FVM related
-.fvm/*
+.fvm/
 !.fvm/fvm_config.json
