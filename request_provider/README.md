@@ -55,9 +55,21 @@ On the UI side, you can listen for state changes:
 
 ```
 
+### Modifying the initial state
+
+If you are starting request right after the constructor, for example by using the [init provider hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook) you'll notice that Flutter complains that you've called setState during the build. This happens because RequestProvider will indeed change from Initial to Loading during the build.
+
+For this case you can manually set the initial state in the constructor.
+
+```
+class MyRequestProvdier extends RequestProvider<Data> {
+  MyRequestProvdier(this._someInteractor): super(initial: RequestState.loading());
+```
+
 ### Extra
 
 You'll probably need to use Listener sometimes (to show dialog or for navigation). For this you can
 do stateful widget and `provider.addListener` to listen for changes.
 
 Another option is to use `ConsumerListener` widget which is under /extra directory.
+
