@@ -1,18 +1,28 @@
 # Flutter-Bits
 
+<img width="640" alt="OG Flutter Bits_2 (1)" src="https://user-images.githubusercontent.com/5460328/129521694-813cafba-68ca-49d8-a55e-5bbd3af58eb3.png">
+
 A collection of common components and pieces that you can add to your Flutter project.
 
 - [Look](https://github.com/infinum/Flutter-Bits/blob/master/look)
 Handle app styling
 
-- [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
-Handle API request states
-
 - [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
 Handle device permissions
 
+- [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
+Loggy addition that logs to crashlytics.
+
+#### Provider and Riverpod
+
 - [Init Provider Hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
-useInitProvider hook that gives callback to initialize providers
+`useInitProvider` hook that gives callback to initialize providers
+
+- [Request Provider](https://github.com/infinum/flutter-bits/tree/master/request_provider)
+Handle API request states
+
+- [Provider Keep Alive Hook](https://github.com/infinum/flutter-bits/tree/master/provider_keep_alive_hook)
+`useProviderKeepAlive` hook that ensures provider is not disposed as long as the hook is in the widget tree
 
 - [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
 Widget for easier stream listening. Useful when controlling navigation and dialogs from provider
@@ -22,6 +32,8 @@ Widget that shows errors to the user. Even the unexpected ones.
 
 - [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
 Loggy addition that logs to crashlytics.
+
+#### Gists, snippets and other resources
 
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
 

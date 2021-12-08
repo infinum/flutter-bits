@@ -13,8 +13,7 @@
 *.iml
 *.ipr
 *.iws
-.idea/*
-!.idea/runConfigurations
+.idea/
 
 # VS Code related
 .vscode/
@@ -28,7 +27,7 @@
 .packages
 .pub-cache/
 .pub/
-/build/
+build/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -38,3 +37,7 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# FVM related
+.fvm/
+!.fvm/fvm_config.json
