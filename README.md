@@ -27,6 +27,12 @@ Handle API request states
 - [Disposable Listener](https://github.com/infinum/flutter-bits/tree/master/disposable_listener)
 Widget for easier stream listening. Useful when controlling navigation and dialogs from provider
 
+- [Generic Error widget](https://github.com/infinum/Flutter-Bits/blob/master/generic_error_widget)
+Widget that shows errors to the user. Even the unexpected ones.
+
+- [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
+Loggy addition that logs to crashlytics.
+
 #### Gists, snippets and other resources
 
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
