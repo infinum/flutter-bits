@@ -61,7 +61,7 @@ If you are starting request right after the constructor, for example by using th
 
 For this case you can manually set the initial state in the constructor.
 
-```
+```dart
 class MyRequestProvider extends RequestProvider<Data> {
   MyRequestProvider(this._someInteractor): super(initial: RequestState.loading());
 ```
