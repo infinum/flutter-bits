@@ -62,7 +62,7 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final presenter = ref.watch(homeScreenPresenterProvider);
 
-    useActionListener((compositeSubscription) {
+    useActionListener((CompositeSubscription compositeSubscription) {
       presenter.action.listen((action) {
         action.when(
           showInfoDialog: () => showInfoDialog(context: context),
