@@ -18,11 +18,13 @@ class FirebaseLogPrinter extends LogPrinter {
     if (record.level.priority >= LogLevel.error.priority) {
       FlavorConfig.submitError(record.error, message: record.message, stackTrace: record.stackTrace);
     } else {
-      final time = record.time.toIso8601String().split('T')[1];
-      final callerFrame = record.callerFrame == null ? '-' : '(${record.callerFrame.location})';
-      final logLevel = record.level.toString().replaceAll('Level.', '').toUpperCase();
-
-      FlavorConfig.log('$time $logLevel $callerFrame ${record.message}');
+      // Code below will route all loggy.log as logs on crashlytics. You need to be careful not to 
+      // include sensitive data. So by default this is commented out.
+      
+      // final time = record.time.toIso8601String().split('T')[1];
+      // final callerFrame = record.callerFrame == null ? '-' : '(${record.callerFrame.location})';
+      // final logLevel = record.level.toString().replaceAll('Level.', '').toUpperCase();
+      // FlavorConfig.log('$time $logLevel $callerFrame ${record.message}');
     }
   }
 }
