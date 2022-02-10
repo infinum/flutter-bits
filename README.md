@@ -35,6 +35,9 @@ Widget that shows errors to the user. Even the unexpected ones.
 - [Loggy for Crashlytics](https://github.com/infinum/flutter-bits/tree/master/loggy_crashlytics)
 Loggy addition that logs to crashlytics.
 
+- [ThemeSvgPicture](https://github.com/infinum/flutter-bits/tree/master/theme_svg_picture)
+Widget that will color the svg in theme colors.
+
 #### Gists, snippets and other resources
 
 - [Article: Custom markers for google_maps_flutter](https://infinum.com/the-capsized-eight/creating-custom-markers-on-google-maps-in-flutter-apps)
