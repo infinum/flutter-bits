@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:ffi';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:loggy/loggy.dart';
 
 import 'request_state.dart';
 
 abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
-  RequestProvider({RequestState<Value, Exception> initial = const RequestState.initial()}) {
-    _requestState = initial;
-  }
+  RequestProvider({RequestState<Value, Exception> initial = const RequestState.initial()}) : _requestState = initial;
 
   RequestState<Value, Exception> _requestState;
 
@@ -23,7 +18,6 @@ abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
     if (newState == _requestState) {
       return;
     }
-    
     _requestState = newState;
 
     if (_mounted) {
@@ -32,27 +26,26 @@ abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
   }
 
   Future<void> executeRequest({
-    @required ValueGetter<Future<Value>> requestBuilder,
-    ValueChanged<Value> valueHandler,
-    ValueChanged<Exception> errorHandler,
+    required ValueGetter<Future<Value>> requestBuilder,
+    Exception? Function(Exception)? errorHandler,
   }) async {
     try {
       _state = _requestState.maybeMap(
-          success: (r) => RequestState<Value, Exception>.loading(resultMaybe: r.value), orElse: () => RequestState<Value, Exception>.loading());
+        success: (result) => RequestState.loading(resultMaybe: result.value),
+        orElse: () => RequestState<Value, Exception>.loading(),
+      );
 
       final value = await requestBuilder();
-      if (value == null) {
-        _state = RequestState.success(Void as Value);
-      } else {
-        _state = RequestState.success(value);
-      }
-
-      valueHandler?.call(value);
+      _state = RequestState.success(value);
     } catch (error, st) {
-      loggy.error('Request error', error, st);
+      loggy.error('Request Error', error, st);
       final exception = (error is Exception) ? error : Exception();
-      _state = RequestState.failure(exception);
-      errorHandler?.call(exception);
+      final stateException = errorHandler != null ? errorHandler(exception) : exception;
+      if (stateException != null) {
+        _state = RequestState.failure(stateException);
+      } else {
+        _state = const RequestState.initial();
+      }
     }
   }
 

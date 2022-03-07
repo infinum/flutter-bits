@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'request_state.dart';
 
@@ -9,24 +11,24 @@ part of 'request_state.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$RequestStateTearOff {
   const _$RequestStateTearOff();
 
-// ignore: unused_element
   RequestStateInitial<Value, Error> initial<Value, Error extends Exception>() {
     return RequestStateInitial<Value, Error>();
   }
 
-// ignore: unused_element
   RequestStateLoading<Value, Error> loading<Value, Error extends Exception>(
-      {Value resultMaybe}) {
+      {Value? resultMaybe}) {
     return RequestStateLoading<Value, Error>(
       resultMaybe: resultMaybe,
     );
   }
 
-// ignore: unused_element
   RequestStateSuccess<Value, Error> success<Value, Error extends Exception>(
       Value result) {
     return RequestStateSuccess<Value, Error>(
@@ -34,7 +36,6 @@ class _$RequestStateTearOff {
     );
   }
 
-// ignore: unused_element
   RequestStateFailure<Value, Error> failure<Value, Error extends Exception>(
       Error error) {
     return RequestStateFailure<Value, Error>(
@@ -44,48 +45,67 @@ class _$RequestStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $RequestState = _$RequestStateTearOff();
 
 /// @nodoc
 mixin _$RequestState<Value, Error extends Exception> {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(Value resultMaybe),
-    @required Result success(Value result),
-    @required Result failure(Error error),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(Value? resultMaybe) loading,
+    required TResult Function(Value result) success,
+    required TResult Function(Error error) failure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(Value resultMaybe),
-    Result success(Value result),
-    Result failure(Error error),
-    @required Result orElse(),
-  });
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(RequestStateInitial<Value, Error> value),
-    @required Result loading(RequestStateLoading<Value, Error> value),
-    @required Result success(RequestStateSuccess<Value, Error> value),
-    @required Result failure(RequestStateFailure<Value, Error> value),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(RequestStateInitial<Value, Error> value),
-    Result loading(RequestStateLoading<Value, Error> value),
-    Result success(RequestStateSuccess<Value, Error> value),
-    Result failure(RequestStateFailure<Value, Error> value),
-    @required Result orElse(),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestStateInitial<Value, Error> value) initial,
+    required TResult Function(RequestStateLoading<Value, Error> value) loading,
+    required TResult Function(RequestStateSuccess<Value, Error> value) success,
+    required TResult Function(RequestStateFailure<Value, Error> value) failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $RequestStateCopyWith<Value, Error extends Exception, $Res> {
   factory $RequestStateCopyWith(RequestState<Value, Error> value,
-          $Res Function(RequestState<Value, Error>) then) =
-      _$RequestStateCopyWithImpl<Value, Error, $Res>;
+      $Res Function(RequestState<Value, Error>) then) =
+  _$RequestStateCopyWithImpl<Value, Error, $Res>;
 }
 
 /// @nodoc
@@ -100,10 +120,10 @@ class _$RequestStateCopyWithImpl<Value, Error extends Exception, $Res>
 
 /// @nodoc
 abstract class $RequestStateInitialCopyWith<Value, Error extends Exception,
-    $Res> {
+$Res> {
   factory $RequestStateInitialCopyWith(RequestStateInitial<Value, Error> value,
-          $Res Function(RequestStateInitial<Value, Error>) then) =
-      _$RequestStateInitialCopyWithImpl<Value, Error, $Res>;
+      $Res Function(RequestStateInitial<Value, Error>) then) =
+  _$RequestStateInitialCopyWithImpl<Value, Error, $Res>;
 }
 
 /// @nodoc
@@ -120,28 +140,21 @@ class _$RequestStateInitialCopyWithImpl<Value, Error extends Exception, $Res>
 }
 
 /// @nodoc
+
 class _$RequestStateInitial<Value, Error extends Exception>
-    with DiagnosticableTreeMixin
     implements RequestStateInitial<Value, Error> {
   const _$RequestStateInitial();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequestState<$Value, $Error>.initial()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'RequestState<$Value, $Error>.initial'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is RequestStateInitial<Value, Error>);
+        (other.runtimeType == runtimeType &&
+            other is RequestStateInitial<Value, Error>);
   }
 
   @override
@@ -149,29 +162,35 @@ class _$RequestStateInitial<Value, Error extends Exception>
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(Value resultMaybe),
-    @required Result success(Value result),
-    @required Result failure(Error error),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(Value? resultMaybe) loading,
+    required TResult Function(Value result) success,
+    required TResult Function(Error error) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(Value resultMaybe),
-    Result success(Value result),
-    Result failure(Error error),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
   }) {
-    assert(orElse != null);
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+    required TResult orElse(),
+  }) {
     if (initial != null) {
       return initial();
     }
@@ -180,29 +199,35 @@ class _$RequestStateInitial<Value, Error extends Exception>
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(RequestStateInitial<Value, Error> value),
-    @required Result loading(RequestStateLoading<Value, Error> value),
-    @required Result success(RequestStateSuccess<Value, Error> value),
-    @required Result failure(RequestStateFailure<Value, Error> value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestStateInitial<Value, Error> value) initial,
+    required TResult Function(RequestStateLoading<Value, Error> value) loading,
+    required TResult Function(RequestStateSuccess<Value, Error> value) success,
+    required TResult Function(RequestStateFailure<Value, Error> value) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(RequestStateInitial<Value, Error> value),
-    Result loading(RequestStateLoading<Value, Error> value),
-    Result success(RequestStateSuccess<Value, Error> value),
-    Result failure(RequestStateFailure<Value, Error> value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
   }) {
-    assert(orElse != null);
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+    required TResult orElse(),
+  }) {
     if (initial != null) {
       return initial(this);
     }
@@ -217,11 +242,11 @@ abstract class RequestStateInitial<Value, Error extends Exception>
 
 /// @nodoc
 abstract class $RequestStateLoadingCopyWith<Value, Error extends Exception,
-    $Res> {
+$Res> {
   factory $RequestStateLoadingCopyWith(RequestStateLoading<Value, Error> value,
-          $Res Function(RequestStateLoading<Value, Error>) then) =
-      _$RequestStateLoadingCopyWithImpl<Value, Error, $Res>;
-  $Res call({Value resultMaybe});
+      $Res Function(RequestStateLoading<Value, Error>) then) =
+  _$RequestStateLoadingCopyWithImpl<Value, Error, $Res>;
+  $Res call({Value? resultMaybe});
 }
 
 /// @nodoc
@@ -238,80 +263,81 @@ class _$RequestStateLoadingCopyWithImpl<Value, Error extends Exception, $Res>
 
   @override
   $Res call({
-    Object resultMaybe = freezed,
+    Object? resultMaybe = freezed,
   }) {
     return _then(RequestStateLoading<Value, Error>(
-      resultMaybe:
-          resultMaybe == freezed ? _value.resultMaybe : resultMaybe as Value,
+      resultMaybe: resultMaybe == freezed
+          ? _value.resultMaybe
+          : resultMaybe // ignore: cast_nullable_to_non_nullable
+      as Value?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$RequestStateLoading<Value, Error extends Exception>
-    with DiagnosticableTreeMixin
     implements RequestStateLoading<Value, Error> {
   const _$RequestStateLoading({this.resultMaybe});
 
   @override
-  final Value resultMaybe;
+  final Value? resultMaybe;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequestState<$Value, $Error>.loading(resultMaybe: $resultMaybe)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequestState<$Value, $Error>.loading'))
-      ..add(DiagnosticsProperty('resultMaybe', resultMaybe));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is RequestStateLoading<Value, Error> &&
-            (identical(other.resultMaybe, resultMaybe) ||
-                const DeepCollectionEquality()
-                    .equals(other.resultMaybe, resultMaybe)));
+        (other.runtimeType == runtimeType &&
+            other is RequestStateLoading<Value, Error> &&
+            const DeepCollectionEquality()
+                .equals(other.resultMaybe, resultMaybe));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(resultMaybe);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(resultMaybe));
 
+  @JsonKey(ignore: true)
   @override
   $RequestStateLoadingCopyWith<Value, Error, RequestStateLoading<Value, Error>>
-      get copyWith => _$RequestStateLoadingCopyWithImpl<Value, Error,
-          RequestStateLoading<Value, Error>>(this, _$identity);
+  get copyWith => _$RequestStateLoadingCopyWithImpl<Value, Error,
+      RequestStateLoading<Value, Error>>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(Value resultMaybe),
-    @required Result success(Value result),
-    @required Result failure(Error error),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(Value? resultMaybe) loading,
+    required TResult Function(Value result) success,
+    required TResult Function(Error error) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return loading(resultMaybe);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(Value resultMaybe),
-    Result success(Value result),
-    Result failure(Error error),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
   }) {
-    assert(orElse != null);
+    return loading?.call(resultMaybe);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+    required TResult orElse(),
+  }) {
     if (loading != null) {
       return loading(resultMaybe);
     }
@@ -320,29 +346,35 @@ class _$RequestStateLoading<Value, Error extends Exception>
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(RequestStateInitial<Value, Error> value),
-    @required Result loading(RequestStateLoading<Value, Error> value),
-    @required Result success(RequestStateSuccess<Value, Error> value),
-    @required Result failure(RequestStateFailure<Value, Error> value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestStateInitial<Value, Error> value) initial,
+    required TResult Function(RequestStateLoading<Value, Error> value) loading,
+    required TResult Function(RequestStateSuccess<Value, Error> value) success,
+    required TResult Function(RequestStateFailure<Value, Error> value) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(RequestStateInitial<Value, Error> value),
-    Result loading(RequestStateLoading<Value, Error> value),
-    Result success(RequestStateSuccess<Value, Error> value),
-    Result failure(RequestStateFailure<Value, Error> value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
   }) {
-    assert(orElse != null);
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+    required TResult orElse(),
+  }) {
     if (loading != null) {
       return loading(this);
     }
@@ -352,20 +384,21 @@ class _$RequestStateLoading<Value, Error extends Exception>
 
 abstract class RequestStateLoading<Value, Error extends Exception>
     implements RequestState<Value, Error> {
-  const factory RequestStateLoading({Value resultMaybe}) =
-      _$RequestStateLoading<Value, Error>;
+  const factory RequestStateLoading({Value? resultMaybe}) =
+  _$RequestStateLoading<Value, Error>;
 
-  Value get resultMaybe;
+  Value? get resultMaybe;
+  @JsonKey(ignore: true)
   $RequestStateLoadingCopyWith<Value, Error, RequestStateLoading<Value, Error>>
-      get copyWith;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $RequestStateSuccessCopyWith<Value, Error extends Exception,
-    $Res> {
+$Res> {
   factory $RequestStateSuccessCopyWith(RequestStateSuccess<Value, Error> value,
-          $Res Function(RequestStateSuccess<Value, Error>) then) =
-      _$RequestStateSuccessCopyWithImpl<Value, Error, $Res>;
+      $Res Function(RequestStateSuccess<Value, Error>) then) =
+  _$RequestStateSuccessCopyWithImpl<Value, Error, $Res>;
   $Res call({Value result});
 }
 
@@ -383,78 +416,80 @@ class _$RequestStateSuccessCopyWithImpl<Value, Error extends Exception, $Res>
 
   @override
   $Res call({
-    Object result = freezed,
+    Object? result = freezed,
   }) {
     return _then(RequestStateSuccess<Value, Error>(
-      result == freezed ? _value.result : result as Value,
+      result == freezed
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+      as Value,
     ));
   }
 }
 
 /// @nodoc
+
 class _$RequestStateSuccess<Value, Error extends Exception>
-    with DiagnosticableTreeMixin
     implements RequestStateSuccess<Value, Error> {
-  const _$RequestStateSuccess(this.result) : assert(result != null);
+  const _$RequestStateSuccess(this.result);
 
   @override
   final Value result;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequestState<$Value, $Error>.success(result: $result)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequestState<$Value, $Error>.success'))
-      ..add(DiagnosticsProperty('result', result));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is RequestStateSuccess<Value, Error> &&
-            (identical(other.result, result) ||
-                const DeepCollectionEquality().equals(other.result, result)));
+        (other.runtimeType == runtimeType &&
+            other is RequestStateSuccess<Value, Error> &&
+            const DeepCollectionEquality().equals(other.result, result));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(result);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(result));
 
+  @JsonKey(ignore: true)
   @override
   $RequestStateSuccessCopyWith<Value, Error, RequestStateSuccess<Value, Error>>
-      get copyWith => _$RequestStateSuccessCopyWithImpl<Value, Error,
-          RequestStateSuccess<Value, Error>>(this, _$identity);
+  get copyWith => _$RequestStateSuccessCopyWithImpl<Value, Error,
+      RequestStateSuccess<Value, Error>>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(Value resultMaybe),
-    @required Result success(Value result),
-    @required Result failure(Error error),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(Value? resultMaybe) loading,
+    required TResult Function(Value result) success,
+    required TResult Function(Error error) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return success(result);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(Value resultMaybe),
-    Result success(Value result),
-    Result failure(Error error),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
   }) {
-    assert(orElse != null);
+    return success?.call(result);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+    required TResult orElse(),
+  }) {
     if (success != null) {
       return success(result);
     }
@@ -463,29 +498,35 @@ class _$RequestStateSuccess<Value, Error extends Exception>
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(RequestStateInitial<Value, Error> value),
-    @required Result loading(RequestStateLoading<Value, Error> value),
-    @required Result success(RequestStateSuccess<Value, Error> value),
-    @required Result failure(RequestStateFailure<Value, Error> value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestStateInitial<Value, Error> value) initial,
+    required TResult Function(RequestStateLoading<Value, Error> value) loading,
+    required TResult Function(RequestStateSuccess<Value, Error> value) success,
+    required TResult Function(RequestStateFailure<Value, Error> value) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return success(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(RequestStateInitial<Value, Error> value),
-    Result loading(RequestStateLoading<Value, Error> value),
-    Result success(RequestStateSuccess<Value, Error> value),
-    Result failure(RequestStateFailure<Value, Error> value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
   }) {
-    assert(orElse != null);
+    return success?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+    required TResult orElse(),
+  }) {
     if (success != null) {
       return success(this);
     }
@@ -496,19 +537,20 @@ class _$RequestStateSuccess<Value, Error extends Exception>
 abstract class RequestStateSuccess<Value, Error extends Exception>
     implements RequestState<Value, Error> {
   const factory RequestStateSuccess(Value result) =
-      _$RequestStateSuccess<Value, Error>;
+  _$RequestStateSuccess<Value, Error>;
 
   Value get result;
+  @JsonKey(ignore: true)
   $RequestStateSuccessCopyWith<Value, Error, RequestStateSuccess<Value, Error>>
-      get copyWith;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $RequestStateFailureCopyWith<Value, Error extends Exception,
-    $Res> {
+$Res> {
   factory $RequestStateFailureCopyWith(RequestStateFailure<Value, Error> value,
-          $Res Function(RequestStateFailure<Value, Error>) then) =
-      _$RequestStateFailureCopyWithImpl<Value, Error, $Res>;
+      $Res Function(RequestStateFailure<Value, Error>) then) =
+  _$RequestStateFailureCopyWithImpl<Value, Error, $Res>;
   $Res call({Error error});
 }
 
@@ -526,78 +568,80 @@ class _$RequestStateFailureCopyWithImpl<Value, Error extends Exception, $Res>
 
   @override
   $Res call({
-    Object error = freezed,
+    Object? error = freezed,
   }) {
     return _then(RequestStateFailure<Value, Error>(
-      error == freezed ? _value.error : error as Error,
+      error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+      as Error,
     ));
   }
 }
 
 /// @nodoc
+
 class _$RequestStateFailure<Value, Error extends Exception>
-    with DiagnosticableTreeMixin
     implements RequestStateFailure<Value, Error> {
-  const _$RequestStateFailure(this.error) : assert(error != null);
+  const _$RequestStateFailure(this.error);
 
   @override
   final Error error;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequestState<$Value, $Error>.failure(error: $error)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequestState<$Value, $Error>.failure'))
-      ..add(DiagnosticsProperty('error', error));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is RequestStateFailure<Value, Error> &&
-            (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
+        (other.runtimeType == runtimeType &&
+            other is RequestStateFailure<Value, Error> &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
+  @JsonKey(ignore: true)
   @override
   $RequestStateFailureCopyWith<Value, Error, RequestStateFailure<Value, Error>>
-      get copyWith => _$RequestStateFailureCopyWithImpl<Value, Error,
-          RequestStateFailure<Value, Error>>(this, _$identity);
+  get copyWith => _$RequestStateFailureCopyWithImpl<Value, Error,
+      RequestStateFailure<Value, Error>>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(Value resultMaybe),
-    @required Result success(Value result),
-    @required Result failure(Error error),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(Value? resultMaybe) loading,
+    required TResult Function(Value result) success,
+    required TResult Function(Error error) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return failure(error);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(Value resultMaybe),
-    Result success(Value result),
-    Result failure(Error error),
-    @required Result orElse(),
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
   }) {
-    assert(orElse != null);
+    return failure?.call(error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(Value? resultMaybe)? loading,
+    TResult Function(Value result)? success,
+    TResult Function(Error error)? failure,
+    required TResult orElse(),
+  }) {
     if (failure != null) {
       return failure(error);
     }
@@ -606,29 +650,35 @@ class _$RequestStateFailure<Value, Error extends Exception>
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(RequestStateInitial<Value, Error> value),
-    @required Result loading(RequestStateLoading<Value, Error> value),
-    @required Result success(RequestStateSuccess<Value, Error> value),
-    @required Result failure(RequestStateFailure<Value, Error> value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(RequestStateInitial<Value, Error> value) initial,
+    required TResult Function(RequestStateLoading<Value, Error> value) loading,
+    required TResult Function(RequestStateSuccess<Value, Error> value) success,
+    required TResult Function(RequestStateFailure<Value, Error> value) failure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(success != null);
-    assert(failure != null);
     return failure(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(RequestStateInitial<Value, Error> value),
-    Result loading(RequestStateLoading<Value, Error> value),
-    Result success(RequestStateSuccess<Value, Error> value),
-    Result failure(RequestStateFailure<Value, Error> value),
-    @required Result orElse(),
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
   }) {
-    assert(orElse != null);
+    return failure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(RequestStateInitial<Value, Error> value)? initial,
+    TResult Function(RequestStateLoading<Value, Error> value)? loading,
+    TResult Function(RequestStateSuccess<Value, Error> value)? success,
+    TResult Function(RequestStateFailure<Value, Error> value)? failure,
+    required TResult orElse(),
+  }) {
     if (failure != null) {
       return failure(this);
     }
@@ -639,9 +689,10 @@ class _$RequestStateFailure<Value, Error extends Exception>
 abstract class RequestStateFailure<Value, Error extends Exception>
     implements RequestState<Value, Error> {
   const factory RequestStateFailure(Error error) =
-      _$RequestStateFailure<Value, Error>;
+  _$RequestStateFailure<Value, Error>;
 
   Error get error;
+  @JsonKey(ignore: true)
   $RequestStateFailureCopyWith<Value, Error, RequestStateFailure<Value, Error>>
-      get copyWith;
+  get copyWith => throw _privateConstructorUsedError;
 }
