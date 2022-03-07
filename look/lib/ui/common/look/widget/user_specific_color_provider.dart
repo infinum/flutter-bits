@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
-import 'package:state_notifier/state_notifier.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'look_subtree.dart';
 
@@ -18,6 +15,6 @@ class UserSpecificColorProvider extends StateNotifier<Color> {
   }
 }
 
-final userSpecificColorProvider = StateNotifierProvider<UserSpecificColorProvider>((ref) {
+final userSpecificColorProvider = StateNotifierProvider<UserSpecificColorProvider, Color>((ref) {
   return UserSpecificColorProvider();
 });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:look/ui/common/look/look_data/look_data.dart';
 import 'package:look/ui/common/look/look_data/specific_look_data/color_look_data.dart';
 import 'package:look/ui/common/look/look_data/specific_look_data/motion_look_data.dart';
@@ -13,15 +13,13 @@ import 'package:look/ui/common/look/widget/user_specific_color_provider.dart';
 /// If you don't have an use case where you need a runtime theme change, then you don't need to use this or
 /// [UserSpecificColorProvider]
 class LookSubtree extends ConsumerWidget {
-  const LookSubtree({
-    @required this.child,
-  });
+  const LookSubtree({required this.child});
 
   final Widget child;
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final Color color = watch(userSpecificColorProvider.state);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Color color = ref.watch(userSpecificColorProvider);
 
     return Look(
       lookData: _createLookData(color),

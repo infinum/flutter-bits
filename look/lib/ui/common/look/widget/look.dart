@@ -4,8 +4,8 @@ import 'package:look/ui/common/look/look_data/look_data.dart';
 /// Simple inherited widget that allows us to do Look.of(context) just like theme works
 class Look extends InheritedWidget {
   const Look({
-    @required this.lookData,
-    @required Widget child,
+    required this.lookData,
+    required Widget child,
   }) : super(child: child);
 
   final LookData lookData;
@@ -16,6 +16,6 @@ class Look extends InheritedWidget {
   }
 
   static LookData of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<Look>().lookData;
+    return context.dependOnInheritedWidgetOfExactType<Look>()!.lookData;
   }
 }

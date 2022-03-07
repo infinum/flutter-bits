@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 
-@immutable
 class TypographyLookData {
   const TypographyLookData({
-    @required this.primaryFontFamily,
-    @required this.h1,
-    @required this.h2,
-    @required this.h3,
-    @required this.h4,
-    @required this.subtitle1,
-    @required this.subtitle2,
-    @required this.body,
-    @required this.body2,
-    @required this.button,
-    @required this.caption,
-    @required this.overline,
+    required this.primaryFontFamily,
+    required this.h1,
+    required this.h2,
+    required this.h3,
+    required this.h4,
+    required this.subtitle1,
+    required this.subtitle2,
+    required this.body,
+    required this.body2,
+    required this.button,
+    required this.caption,
+    required this.overline,
   });
 
   const TypographyLookData.getDefault()
