@@ -19,8 +19,12 @@ abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
 
   bool _mounted = true;
 
-  set _state(RequestState<Value, Exception> state) {
-    _requestState = state;
+  set _state(RequestState<Value, Exception> newState) {
+    if (newState == _requestState) {
+      return;
+    }
+    
+    _requestState = newState;
 
     if (_mounted) {
       notifyListeners();
@@ -34,7 +38,7 @@ abstract class RequestProvider<Value> with ChangeNotifier, NetworkLoggy {
   }) async {
     try {
       _state = _requestState.maybeMap(
-          success: (r) => RequestState.loading(resultMaybe: r.value), orElse: () => const RequestState.loading());
+          success: (r) => RequestState<Value, Exception>.loading(resultMaybe: r.value), orElse: () => RequestState<Value, Exception>.loading());
 
       final value = await requestBuilder();
       if (value == null) {
