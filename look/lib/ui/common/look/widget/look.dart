@@ -5,9 +5,10 @@ import '../look_data/look_data.dart';
 /// Simple inherited widget that allows us to do Look.of(context) just like theme works
 class Look extends InheritedWidget {
   const Look({
+    Key? key,
     required this.lookData,
     required Widget child,
-  }) : super(child: child);
+  }) : super(key: key, child: child);
 
   final LookData lookData;
 

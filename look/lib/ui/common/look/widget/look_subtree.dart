@@ -14,7 +14,7 @@ import 'user_specific_color_provider.dart';
 /// If you don't have an use case where you need a runtime theme change, then you don't need to use this or
 /// [UserSpecificColorProvider]
 class LookSubtree extends ConsumerWidget {
-  const LookSubtree({required this.child});
+  const LookSubtree({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
