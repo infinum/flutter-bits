@@ -4,11 +4,11 @@ class ColorLookData {
   const ColorLookData({
     required this.brightness,
     required this.primary,
-    required this.primaryVariant,
+    required this.primaryContainer,
     required this.primaryPressed,
     required this.primaryDisabled,
     required this.secondary,
-    required this.secondaryVariant,
+    required this.secondaryContainer,
     required this.secondaryPressed,
     required this.secondaryDisabled,
     required this.tertiary,
@@ -30,14 +30,14 @@ class ColorLookData {
   });
 
   const ColorLookData.getDefaultWithUserSpecificColor(
-      [Color? primaryVariant]) // primaryVariant is assigned as user specific color
+      [Color? primaryContainer]) // primaryContainer is assigned as user specific color
       : brightness = Brightness.light,
         primary = const Color(0xff005670),
-        primaryVariant = primaryVariant ?? const Color(0xff005670),
+        primaryContainer = primaryContainer ?? const Color(0xff005670),
         primaryPressed = const Color(0xff043E50),
         primaryDisabled = const Color(0xffc4d6dc),
         secondary = const Color(0xffAA198D),
-        secondaryVariant = const Color(0xffAA198D),
+        secondaryContainer = const Color(0xffAA198D),
         secondaryPressed = const Color(0xff7c0E66),
         secondaryDisabled = const Color(0xffe3cbde),
         tertiary = const Color(0xffe5eef1),
@@ -60,9 +60,9 @@ class ColorLookData {
   // Material color scheme
   final Brightness brightness;
   final Color primary;
-  final Color primaryVariant;
+  final Color primaryContainer;
   final Color secondary;
-  final Color secondaryVariant;
+  final Color secondaryContainer;
   final Color onPrimary;
   final Color onSecondary;
   final Color error;

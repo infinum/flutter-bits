@@ -12,7 +12,7 @@ class Look extends InheritedWidget {
   final LookData lookData;
 
   @override
-  bool updateShouldNotify(covariant Look oldWidget) {
+  bool updateShouldNotify(Look oldWidget) {
     return lookData != oldWidget.lookData;
   }
 
