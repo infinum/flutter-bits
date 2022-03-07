@@ -11,6 +11,12 @@ class LookData {
     required this.typography,
   });
 
+  LookData.getDefault()
+      : color = const ColorLookData.getDefaultWithUserSpecificColor(),
+        motion = const MotionLookData.getDefault(),
+        shape = ShapeLookData.getDefault(),
+        typography = const TypographyLookData.getDefault();
+
   final ColorLookData color;
   final MotionLookData motion;
   final ShapeLookData shape;

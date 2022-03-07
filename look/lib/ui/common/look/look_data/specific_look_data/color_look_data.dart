@@ -30,9 +30,10 @@ class ColorLookData {
   });
 
   const ColorLookData.getDefaultWithUserSpecificColor(
-      this.primaryVariant) // primaryVariant is assigned as user specific color
+      [Color? primaryVariant]) // primaryVariant is assigned as user specific color
       : brightness = Brightness.light,
         primary = const Color(0xff005670),
+        primaryVariant = primaryVariant ?? const Color(0xff005670),
         primaryPressed = const Color(0xff043E50),
         primaryDisabled = const Color(0xffc4d6dc),
         secondary = const Color(0xffAA198D),
