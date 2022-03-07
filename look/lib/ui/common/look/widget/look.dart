@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_data/look_data.dart';
+
+import '../look_data/look_data.dart';
 
 /// Simple inherited widget that allows us to do Look.of(context) just like theme works
 class Look extends InheritedWidget {

@@ -1,7 +1,7 @@
-import 'package:look/ui/common/look/look_data/specific_look_data/color_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/motion_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/shape_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/typography_look_data.dart';
+import 'specific_look_data/color_look_data.dart';
+import 'specific_look_data/motion_look_data.dart';
+import 'specific_look_data/shape_look_data.dart';
+import 'specific_look_data/typography_look_data.dart';
 
 class LookData {
   const LookData({

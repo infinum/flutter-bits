@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_data/look_data.dart';
+
+import '../../look_data/look_data.dart';
 
 /// We use Look to define style in our app, and ThemeData is used by Flutter framework.
 /// Here we try to map as many ThemeData fields from Look.

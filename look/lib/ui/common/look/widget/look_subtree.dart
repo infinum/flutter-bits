@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:look/ui/common/look/look_data/look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/color_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/motion_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/shape_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/typography_look_data.dart';
-import 'package:look/ui/common/look/widget/look.dart';
-import 'package:look/ui/common/look/widget/user_specific_color_provider.dart';
+
+import '../look_data/look_data.dart';
+import '../look_data/specific_look_data/color_look_data.dart';
+import '../look_data/specific_look_data/motion_look_data.dart';
+import '../look_data/specific_look_data/shape_look_data.dart';
+import '../look_data/specific_look_data/typography_look_data.dart';
+import 'look.dart';
+import 'user_specific_color_provider.dart';
 
 /// This is widget that uses [Look] but it expands it with [UserSpecificColorProvider] so it can be refreshed at runtime.
 ///
