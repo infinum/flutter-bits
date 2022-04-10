@@ -23,3 +23,9 @@ Use `IncludeList.toExtra('<includeList,string,here>')` as in the following examp
 await _dio.post(ApiEndpoints.register, data: registerRequest, options: Options(extra: IncludeList.toExtra('<includeList,string,here>')));
 ```
 
+Or
+
+```
+await _dio.post(ApiEndpoints.register, data: registerRequest, options: IncludeListOptions('<includeList,string,here>'));
+```
+
