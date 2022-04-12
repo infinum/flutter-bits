@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_data/look_data.dart';
+
+import '../../look_data/look_data.dart';
 
 /// We use Look to define style in our app, and ThemeData is used by Flutter framework.
 /// Here we try to map as many ThemeData fields from Look.
@@ -13,10 +14,10 @@ class ThemeDataMapper {
       fontFamily: lookData.typography.primaryFontFamily,
       colorScheme: ColorScheme(
           primary: lookData.color.primary,
-          primaryVariant: lookData.color.primaryVariant,
+          primaryContainer: lookData.color.primaryContainer,
           secondary: lookData.color.secondary,
           onSecondary: lookData.color.onSecondary,
-          secondaryVariant: lookData.color.secondaryVariant,
+          secondaryContainer: lookData.color.secondaryContainer,
           surface: lookData.color.surface,
           background: lookData.color.background,
           error: lookData.color.error,
@@ -26,11 +27,9 @@ class ThemeDataMapper {
           onError: lookData.color.onError,
           brightness: lookData.color.brightness),
       primaryColor: lookData.color.primary,
-      accentColor: lookData.color.secondary,
       splashColor: lookData.color.secondary,
       errorColor: lookData.color.error,
       // disabledColor: lookData.color // waiting for designer to add color name
-      buttonColor: lookData.color.secondary,
       backgroundColor: lookData.color.background,
       textTheme: defaultTheme.textTheme.copyWith(
           headline1: lookData.typography.h1,
