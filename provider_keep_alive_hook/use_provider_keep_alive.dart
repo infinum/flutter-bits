@@ -1,77 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// A hook that prevents a provider from being automatically disposed.
+/// Hook that returns the provider and calls [onInit] exactly once.
 ///
-/// This hook listens to a provider (similarly to [useProvider]), without triggering a rebuild when the provider value changes.
-///
-/// Example:
-///
-/// ```dart
-/// class Example extends HookWidget {
-///   @override
-///   Widget build(BuildContext context) {
-///     useProviderKeepAlive(counterProvider);
-///     return Container();
-///   }
-/// }
-/// ```
-///
-/// As long as the `Example` widget is in the widget tree, the `counterProvider` will not get disposed.
-/// When the `counterProvider` value changes the `Example` widget will not get rebuild.
-void useProviderKeepAlive(ProviderListenable provider) {
-  final container = ProviderScope.containerOf(useContext());
-  use<void>(_ProviderKeepAliveHook(container, provider));
+/// This is designed to be used with init method on provider to initialize some runtime dependencies.
+T useInitProvider<T>(WidgetRef ref, ProviderListenable<T> provider, Function(T) onInit) {
+  final T _provider = ref.watch<T>(provider);
+  return use(_InitProviderHook<T>(_provider, onInit));
 }
 
-class _ProviderKeepAliveHook extends Hook<void> {
-  const _ProviderKeepAliveHook(this._container, this._providerListenable);
+class _InitProviderHook<T> extends Hook<T> {
+  const _InitProviderHook(this.provider, this._onInit);
 
-  final ProviderContainer _container;
-  final ProviderListenable _providerListenable;
+  final Function(T) _onInit;
+  final T provider;
 
   @override
-  _ProviderKeepAliveHookState createState() => _ProviderKeepAliveHookState();
+  _InitProviderHookState<T> createState() => _InitProviderHookState();
 }
 
-class _ProviderKeepAliveHookState extends HookState<void, _ProviderKeepAliveHook> {
-  ProviderSubscription? _link;
+class _InitProviderHookState<T> extends HookState<T, _InitProviderHook<T>> {
+  bool inited = false;
 
   @override
   void initHook() {
     super.initHook();
-    _listen();
-  }
 
-  void _listen() {
-    _link?.close();
-    _link = hook._container.listen<dynamic>(
-      hook._providerListenable,
-    );
-  }
-
-  @override
-  void build(BuildContext context) {}
-
-  @override
-  void didUpdateHook(_ProviderKeepAliveHook oldHook) {
-    super.didUpdateHook(oldHook);
-    assert(
-      oldHook._providerListenable.runtimeType == hook._providerListenable.runtimeType,
-      'The provider listened cannot change',
-    );
-
-    if (oldHook._container != hook._container) {
-      _listen();
-    } else if (oldHook._providerListenable != hook._providerListenable) {
-      _listen();
+    if (!inited) {
+      inited = true;
+      hook._onInit.call(hook.provider);
     }
   }
 
   @override
-  void dispose() {
-    _link!.close();
-    super.dispose();
+  void didUpdateHook(_InitProviderHook<T> oldHook) {
+    super.didUpdateHook(oldHook);
   }
+
+  @override
+  T build(BuildContext context) {
+    return hook.provider;
+  }
+
+  @override
+  String get debugLabel => 'useInitProvider';
+
+  @override
+  bool get debugSkipValue => true;
 }
