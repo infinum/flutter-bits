@@ -59,3 +59,12 @@ Like some other [collections](https://github.com/gskinnerTeam/flutter_vignettes)
 - Reduce your dependencies to minimum. List them all in README and explain why are they needed.
 - Go to the root project README and modify it to include your sample.
 - Open up a Pull Request.
+
+<p align="center">
+  <a href='https://infinum.com'>
+    <picture>
+        <source srcset="https://assets.infinum.com/brand/logo/static/white.svg" media="(prefers-color-scheme: dark)">
+        <img src="https://assets.infinum.com/brand/logo/static/default.svg">
+    </picture>
+  </a>
+</p>
