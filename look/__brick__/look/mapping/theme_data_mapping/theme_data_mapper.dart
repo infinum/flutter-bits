@@ -14,10 +14,10 @@ class ThemeDataMapper {
       fontFamily: lookData.typography.primaryFontFamily,
       colorScheme: ColorScheme(
           primary: lookData.color.primary,
-          primaryContainer: lookData.color.primaryContainer,
+          primaryContainer: lookData.color.primaryVariant,
           secondary: lookData.color.secondary,
           onSecondary: lookData.color.onSecondary,
-          secondaryContainer: lookData.color.secondaryContainer,
+          secondaryContainer: lookData.color.secondaryVariant,
           surface: lookData.color.surface,
           background: lookData.color.background,
           error: lookData.color.error,
@@ -44,8 +44,8 @@ class ThemeDataMapper {
           subtitle2: lookData.typography.subtitle2,
           overline: lookData.typography.overline),
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: lookData.typography.body.copyWith(color: lookData.color.neutral),
-        labelStyle: lookData.typography.body.copyWith(color: lookData.color.neutral),
+        hintStyle: lookData.typography.body.copyWith(color: lookData.color.onBackground),
+        labelStyle: lookData.typography.body.copyWith(color: lookData.color.onBackground),
         errorStyle: lookData.typography.caption.copyWith(color: lookData.color.error),
         focusColor: lookData.color.primary,
       ),
