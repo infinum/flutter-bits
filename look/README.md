@@ -46,5 +46,20 @@ return Look(
 This project contains one provider and `LookSubtree`. This is example of how to do theme change
 at runtime. If you don't need need, you can delete that.
 
+## How to make changes to look project
+
+If you don't have Mason CLI run this command:
+
+`dart pub global activate mason_cli`
+
+All changes related to look needs to be done inside __brick__ folder. To apply all changes to 
+example project, position command path to look/example and from there run:
+
+`mason add look --path ../`
+
+`mason make look --output-dir lib/ui/common --on-conflict overwrite`
+
+now all changes are applied to example project.
+
 
 
