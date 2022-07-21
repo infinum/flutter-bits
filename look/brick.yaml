@@ -1,0 +1,7 @@
+name: look
+description: Look is a package for styling the app theme. It is basically expansion of flutter Theme that allows us to use colors and typography in a consistent manner throught the app.
+
+version: 1.0.0
+
+environment:
+  mason: ">=0.1.0-dev.26 <0.1.0"
