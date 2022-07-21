@@ -12,7 +12,7 @@ class LookData {
   });
 
   LookData.getDefault()
-      : color = const ColorLookData.getDefaultWithUserSpecificColor(),
+      : color = const ColorLookData.getDefault(),
         motion = const MotionLookData.getDefault(),
         shape = ShapeLookData.getDefault(),
         typography = const TypographyLookData.getDefault();
