@@ -1,7 +1,7 @@
 
 # useInitProvider
 
-# Note: With riverpod it's possible to achieve same behaviour with `useEffect`
+## Note: With riverpod it's possible to achieve same behaviour with `useEffect`
 
 ---
 
