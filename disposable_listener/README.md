@@ -1,6 +1,12 @@
 
 ## disposable_listener
 
+## NOTE: Not needed with Riverpod
+
+With riverpod, you can use `ref.listen` this widget is a replacement when using Provider.
+
+---
+
 Widget that can be used to listen for streams on provider.
 
 Listen to provider in [onListen] and for easy canceling add them to disposable:
