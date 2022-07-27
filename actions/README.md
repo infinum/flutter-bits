@@ -2,7 +2,7 @@
 
 Actions represent communication between presenter and UI, in cases where execution of actions does not change the view tree in a declarative way. This includes navigation, showing dialog, toasts, etc.
 
-More about actions can be found in [handbook](https://infinum.com/handbook/flutter/architecture/communication-between-ui-and-provider#actions-ui-andlt-provider).
+More about actions can be found in [handbook](https://infinum.com/handbook/flutter/architecture/communication-between-ui-and-presenter#actions-ui-andlt-presenter).
 
 Manually implementing actions using `Streams` is error-prone and requires some boilerplate code. Here you can find some code bits, that will make creating and managing actions easier.
 
