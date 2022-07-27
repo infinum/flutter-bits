@@ -1,6 +1,9 @@
 
 # useInitProvider
 
+#Note: With riverpod it's possible to achieve same behaviour with `useEffect`
+
+---
 
 Hook that returns the provider and calls [onInit] exactly once.
 
