@@ -68,8 +68,12 @@ class MyRequestProvider extends RequestProvider<Data> {
 
 ### Extra
 
-You'll probably need to use Listener sometimes (to show dialog or for navigation). For this you can
-do stateful widget and `provider.addListener` to listen for changes.
-
-Another option is to use `ConsumerListener` widget which is under /extra directory.
+You'll probably need to use Listener sometimes (to show dialog or for navigation on success, error or loading). For this you can use:
+```
+    ref.listen<MyPresenter>(myPresenter, (_, presenter) {
+      presenter.state.whenOrNull(success: (_) {
+        Navigator.of(context).pushReplacement<void, void>(SomeNewScreen.route());
+      });
+    });
+```
 
