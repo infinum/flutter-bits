@@ -1,4 +1,4 @@
-mixin StateNotifierActionEmitterMixin<T> on StateNotifier implements ActionEmitter<T> {
+mixin StateNotifierActionEmitterMixin<T, S> on StateNotifier<S> implements ActionEmitter<T> {
   final _actionSubject = PublishSubject<T>();
 
   @override
