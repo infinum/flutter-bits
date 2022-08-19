@@ -1,4 +1,6 @@
-class MotionLookData {
+import 'package:flutter/material.dart';
+
+class MotionLookData extends ThemeExtension<MotionLookData> {
   const MotionLookData({
     required this.durationVeryFast,
     required this.durationFast,
@@ -16,4 +18,33 @@ class MotionLookData {
   final Duration durationFast;
   final Duration durationNormal;
   final Duration durationSlow;
+
+  @override
+  ThemeExtension<MotionLookData> copyWith({
+    Duration? durationVeryFast,
+    Duration? durationFast,
+    Duration? durationNormal,
+    Duration? durationSlow,
+  }) {
+    return MotionLookData(
+      durationVeryFast: durationVeryFast ?? this.durationVeryFast,
+      durationFast: durationFast ?? this.durationFast,
+      durationNormal: durationNormal ?? this.durationNormal,
+      durationSlow: durationSlow ?? this.durationSlow,
+    );
+  }
+
+  @override
+  ThemeExtension<MotionLookData> lerp(ThemeExtension<MotionLookData>? other, double t) {
+    if (other is! MotionLookData) {
+      return this;
+    }
+
+    return MotionLookData(
+      durationVeryFast: other.durationVeryFast,
+      durationFast: other.durationFast,
+      durationNormal: other.durationNormal,
+      durationSlow: other.durationSlow,
+    );
+  }
 }
