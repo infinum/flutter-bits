@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/color_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/motion_look_data.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/shape_look_data.dart';
+import 'package:look/ui/common/bits_theme/specific_data/color_data.dart';
+import 'package:look/ui/common/bits_theme/specific_data/motion_data.dart';
+import 'package:look/ui/common/bits_theme/specific_data/shape_data.dart';
 
 class LookThemeData {
   static ThemeData getThemeData() {
@@ -44,13 +44,12 @@ class LookThemeData {
         focusColor: Color(0xff005670),
       ),
 
-      /// Add extensions for things that are defined in the design but are not part
-      /// of material guidelines.
-      /// Additional `LookData` can be added, (ex. TypographyLookData)
+      /// Add extensions for things that are defined in the design but are not part of material guidelines.
+      /// Additional data can be added, (ex. TypographyData)
       extensions: const [
-        MotionLookData.getDefault(),
-        ShapeLookData.getDefault(),
-        ColorLookData.getDefault(),
+        MotionData.getDefault(),
+        ShapeData.getDefault(),
+        CustomColors.getDefault(),
       ],
       brightness: Brightness.light,
       cardColor: Colors.white,

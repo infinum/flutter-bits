@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_theme_data.dart';
+import 'package:look/ui/common/bits_theme/bits_theme_data.dart';
 
 import 'ui/home/home_screen.dart';
 

@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
 
-class ShapeLookData extends ThemeExtension<ShapeLookData> {
-  const ShapeLookData({
+class ShapeData extends ThemeExtension<ShapeData> {
+  const ShapeData({
     required this.cardBorderRadius,
   });
 
-  const ShapeLookData.getDefault() : cardBorderRadius = const BorderRadius.all(Radius.circular(24));
+  const ShapeData.getDefault() : cardBorderRadius = const BorderRadius.all(Radius.circular(24));
 
   // final ShapeBorder buttonShape;
   // final ShapeBorder circleButtonShape;
   final BorderRadius cardBorderRadius;
 
   @override
-  ThemeExtension<ShapeLookData> copyWith({
+  ShapeData copyWith({
     BorderRadius? cardBorderRadius,
   }) {
-    return ShapeLookData(
+    return ShapeData(
       cardBorderRadius: cardBorderRadius ?? this.cardBorderRadius,
     );
   }
 
   @override
-  ThemeExtension<ShapeLookData> lerp(ThemeExtension<ShapeLookData>? other, double t) {
-    if (other is! ShapeLookData) {
+  ShapeData lerp(ThemeExtension<ShapeData>? other, double t) {
+    if (other is! ShapeData) {
       return this;
     }
 
-    return ShapeLookData(
+    return ShapeData(
       cardBorderRadius: BorderRadius.lerp(cardBorderRadius, other.cardBorderRadius, t) ?? other.cardBorderRadius,
     );
   }
+}
+
+extension ShapeDataExtension on ThemeData {
+  ShapeData get colorLook => extension<ShapeData>()!;
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:look/ui/common/look/look_data/specific_look_data/colors/neutral_color.dart';
+import 'package:look/ui/common/bits_theme/specific_data/colors/neutral_color.dart';
 
-class ColorLookData extends ThemeExtension<ColorLookData> {
-  const ColorLookData({required this.attentionColor, required this.neutral});
+class CustomColors extends ThemeExtension<CustomColors> {
+  const CustomColors({required this.attentionColor, required this.neutral});
 
-  const ColorLookData.getDefault()
+  const CustomColors.getDefault()
       : attentionColor = const Color(0xfffdbf2f),
         neutral = const NeutralColor(0xFF12335B, {
           100: Color(0xFF12335B),
@@ -24,22 +24,26 @@ class ColorLookData extends ThemeExtension<ColorLookData> {
   final NeutralColor neutral;
 
   @override
-  ColorLookData copyWith({Color? attentionColor, NeutralColor? neutral}) {
-    return ColorLookData(
+  CustomColors copyWith({Color? attentionColor, NeutralColor? neutral}) {
+    return CustomColors(
       attentionColor: attentionColor ?? this.attentionColor,
       neutral: neutral ?? this.neutral,
     );
   }
 
   @override
-  ThemeExtension<ColorLookData> lerp(ThemeExtension<ColorLookData>? other, double t) {
-    if (other is! ColorLookData) {
+  CustomColors lerp(ThemeExtension<CustomColors>? other, double t) {
+    if (other is! CustomColors) {
       return this;
     }
 
-    return ColorLookData(
+    return CustomColors(
       attentionColor: Color.lerp(attentionColor, other.attentionColor, t) ?? other.attentionColor,
       neutral: other.neutral,
     );
   }
+}
+
+extension CustomColorsData on ThemeData {
+  CustomColors get colorLook => extension<CustomColors>()!;
 }
