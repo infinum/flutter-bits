@@ -11,7 +11,7 @@ abstract class RequestNotifier<Value> extends StateNotifier<RequestState<Value>>
 
   Future<void> executeRequest({
     required ValueGetter<Future<Value>> requestBuilder,
-    Exception? Function(Object)? errorHandler,
+    Object? Function(Object)? errorHandler,
   }) async {
     try {
       state = state.maybeMap(
@@ -23,10 +23,9 @@ abstract class RequestNotifier<Value> extends StateNotifier<RequestState<Value>>
       state = RequestState.success(value);
     } catch (error, st) {
       loggy.error('Request Error', error, st);
-      final exception = (error is Exception) ? error : Exception();
-      final stateException = errorHandler != null ? errorHandler(exception) : exception;
-      if (stateException != null) {
-        state = RequestState.failure(stateException);
+      final stateError = errorHandler != null ? errorHandler(error) : error;
+      if (stateError != null) {
+        state = RequestState.failure(stateError);
       } else {
         state = const RequestState.initial();
       }

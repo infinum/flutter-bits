@@ -24,12 +24,12 @@ without RequestNotifier (but I think this will be very rare).
 Extend the request provider
 
 ```dart
-final fetchTranslationsProvider = StateNotifierProvider<FetchTranslationsProvider, void>(
-  (ref) => ProfileInfoRequestPresenter(ProfileInfoInteractorImpl()),
+final fetchTranslationsPresenter = StateNotifierProvider<FetchTranslationsPresenter, void>(
+  (ref) => FetchTranslationsPresenter(TranslationsInteractorImpl()),
 );
 
-class FetchTranslationsProvider extends RequestNotifier<void> {
-  FetchTranslationsProvider(this.translationsInteractor);
+class FetchTranslationsPresenter extends RequestNotifier<void> {
+  FetchTranslationsPresenter(this.translationsInteractor);
 
   final TranslationsInteractor translationsInteractor;
 
@@ -57,8 +57,8 @@ On the UI side, you can listen for state changes:
 The first state is by default set to initial. If you want to use some other state you can do it:
 
 ```dart
-class MyRequestProvider extends RequestProvider<Data> {
-  MyRequestProvider(this._someInteractor): super(initial: RequestState.loading());
+class MyRequestPresenter extends RequestNotifier<Data> {
+  MyRequestPresenter(this._someInteractor): super(initial: RequestState.loading());
 ```
 
 This is useful if you want to set state to loading right away. For example, if you are starting
