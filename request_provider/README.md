@@ -1,7 +1,7 @@
 
-## Request Provider
+## Request Notifier (renamed from RequestProvider)
 
-Request Provider is addition that helps us execute any long-running async operation, with states:
+RequestNotifier is addition that helps us execute any long-running async operation, with states:
 _initial_, _loading_, _success_ and _error_.
 
 Most often that will be API requests. We make each use case of data fetch into single provider that
@@ -17,16 +17,19 @@ needs.
 These all requests would be part of one provider.
 
 If you don't need to watch for _error_ or _loading_ states for some reason, then you can do request
-without RequestProvider (but I think this will be very rare).
+without RequestNotifier (but I think this will be very rare).
 
 ### Usage
 
 Extend the request provider
 
 ```dart
+final fetchTranslationsPresenter = StateNotifierProvider<FetchTranslationsPresenter, void>(
+  (ref) => FetchTranslationsPresenter(TranslationsInteractorImpl()),
+);
 
-class FetchTranslationsProvider extends RequestProvider<void> {
-  FetchTranslationsProvider(this.translationsInteractor);
+class FetchTranslationsPresenter extends RequestNotifier<void> {
+  FetchTranslationsPresenter(this.translationsInteractor);
 
   final TranslationsInteractor translationsInteractor;
 
@@ -42,29 +45,29 @@ class FetchTranslationsProvider extends RequestProvider<void> {
 On the UI side, you can listen for state changes:
 
 ```dart
-
-      Consumer<FetchTranslationsProvider>(
-        builder: (context, provider) {
-          return provider.state.when(
-            success: (response) => _buildForm(context),
-            loading: (_) => GenericLoader(),
-            failure: (e) => GenericError(ErrorHandlingManager.toMessage(e)),
-          );
-        }
-      )
-
+      return ref.watch(fetchTranslationsProvider).when(
+        success: (response) => _buildForm(context),
+        loading: (_) => GenericLoader(),
+        failure: (e) => GenericError(ErrorHandlingManager.toMessage(e)),
+      );
 ```
 
 ### Modifying the initial state
 
-If you are starting request right after the constructor, for example by using the [init provider hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook) you'll notice that Flutter complains that you've called setState during the build. This happens because RequestProvider will indeed change from Initial to Loading during the build.
-
-For this case you can manually set the initial state in the constructor.
+The first state is by default set to initial. If you want to use some other state you can do it:
 
 ```dart
-class MyRequestProvider extends RequestProvider<Data> {
-  MyRequestProvider(this._someInteractor): super(initial: RequestState.loading());
+class MyRequestPresenter extends RequestNotifier<Data> {
+  MyRequestPresenter(this._someInteractor): super(initial: RequestState.loading());
 ```
+
+This is useful if you want to set state to loading right away. For example, if you are starting
+request right during build method by using the [init provider hook](https://github.com/infinum/flutter-bits/tree/master/init_provider_hook)
+you'll notice that Flutter complains that you've called setState during the build.
+This happens because RequestNotifier will indeed change from Initial to Loading during the build.
+
+So proper way is to change first state to loading.
+
 
 ### Extra
 

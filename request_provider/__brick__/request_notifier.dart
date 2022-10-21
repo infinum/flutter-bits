@@ -6,27 +6,26 @@ import 'package:loggy/loggy.dart';
 
 import 'request_state.dart';
 
-abstract class RequestProvider<Value> extends StateNotifier<RequestState<Value, Exception>> with NetworkLoggy {
-  RequestProvider({RequestState<Value, Exception> initial = const RequestState.initial()}) : super(initial);
+abstract class RequestNotifier<Value> extends StateNotifier<RequestState<Value>> with NetworkLoggy {
+  RequestNotifier({RequestState<Value> initial = const RequestState.initial()}) : super(initial);
 
   Future<void> executeRequest({
     required ValueGetter<Future<Value>> requestBuilder,
-    Exception? Function(Exception)? errorHandler,
+    Object? Function(Object)? errorHandler,
   }) async {
     try {
       state = state.maybeMap(
         success: (result) => RequestState.loading(resultMaybe: result.value),
-        orElse: () => RequestState<Value, Exception>.loading(),
+        orElse: () => RequestState<Value>.loading(),
       );
 
       final value = await requestBuilder();
       state = RequestState.success(value);
     } catch (error, st) {
       loggy.error('Request Error', error, st);
-      final exception = (error is Exception) ? error : Exception();
-      final stateException = errorHandler != null ? errorHandler(exception) : exception;
-      if (stateException != null) {
-        state = RequestState.failure(stateException);
+      final stateError = errorHandler != null ? errorHandler(error) : error;
+      if (stateError != null) {
+        state = RequestState.failure(stateError);
       } else {
         state = const RequestState.initial();
       }
