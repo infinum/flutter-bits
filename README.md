@@ -7,6 +7,9 @@ A collection of common components and pieces that you can add to your Flutter pr
 - [Look](https://github.com/infinum/Flutter-Bits/blob/master/look)
 Handle app styling
 
+- [Theme extension](https://github.com/infinum/Flutter-Bits/blob/master/theme_extension)
+  Handle app styling with built in theme extensions
+
 - [Device Permissions](https://github.com/infinum/flutter-bits/tree/master/device_permissions)
 Handle device permissions
 
