@@ -85,3 +85,48 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 ```
+
+## Returning result back to presenter
+
+Use `Completer` to pass the result of an action back to the presenter.
+
+```dart
+class HomeScreenPresenter extends AutoDisposeNotifier<void> {
+  @override
+  void build() {}
+
+  Future<void> delete() async {
+    final completer = Completer<bool>();
+    ref.read(homeScreenActionProvider.notifier).emit(HomeScreenAction.confirmDelete(completer));
+
+    final confirmed = await completer.future;
+    if (!confirmed){
+      return;
+    }
+    // ...
+  }
+}
+
+final homeScreenActionProvider = ActionProvider.autoDispose<HomeScreenAction>();
+
+@freezed
+class HomeScreenAction with _$HomeScreenAction {
+  const factory HomeScreenAction.confirmDelete(Completer<bool> completer) = _HomeScreenActionConfirmDelete;
+}
+
+// ---------------------------------------------------------------------------------------------------------
+class HomeScreen extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(homeScreenActionProvider, (_, action) {
+      action?.when(
+        confirmDelete: (completer) async {
+          final result = await showDialog(...);
+          completer.complete(result);
+        }
+      );
+    });
+    // ...
+  }
+}
+```
