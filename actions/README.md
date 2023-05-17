@@ -1,77 +1,87 @@
 # Actions
 
-Actions represent communication between presenter and UI, in cases where execution of actions does not change the view tree in a declarative way. This includes navigation, showing dialog, toasts, etc.
+Actions represent communication between presenter and UI in cases where execution of an action does not change the view tree in a declarative way. This includes navigation, showing dialogs, snack bars, etc.
 
-More about actions can be found in [handbook](https://infinum.com/handbook/flutter/architecture/communication-between-ui-and-presenter#actions-ui-andlt-presenter).
-
-Manually implementing actions using `Streams` is error-prone and requires some boilerplate code. Here you can find some code bits, that will make creating and managing actions easier.
+More about actions can be found in the [handbook](https://infinum.com/handbook/flutter/architecture/communication-between-ui-and-presenter#actions-ui-andlt-presenter).
 
 ## Action
 
-An action represents an operation that should be done on the Ui side.
+An action represents an operation that should be executed on the UI side.
 
 Since a presenter can emit multiple types of actions, they are bundled together with the help of `freezed`.
 
 ```dart
 @freezed
 class HomeScreenAction with _$HomeScreenAction {
-  const factory HomeScreenAction.showInfoDialog() = HomeScreenActionShowInfoDialog;
-  const factory HomeScreenAction.showSuccessToast() = HomeScreenActionShowSuccessToast;
+  const factory HomeScreenAction.showInfoDialog() = _HomeScreenActionShowInfoDialog;
+  const factory HomeScreenAction.showErrorSnackBar(Exception e) = _HomeScreenActionShowErrorSnackBar;
 }
 ```
 
-## Action emitter
+## ActionNotifier and ActionProvider
 
-Action emitter is any class that emits (gives-out) actions. Actions are emitted as a `Stream` of `Action` objects.
-
-A class that emits actions must implement the `ActionEmitter` interface.
+Add `ActionNotifier` and `ActionProvider` to your project to make managing actions and creating action-providers easier.
 
 ```dart
-class HomeScreenPresenter implements ActionEmitter<HomeScreenAction> {
+class ActionNotifier<T> extends AutoDisposeNotifier<T?> {
   @override
-  Stream<HomeScreenAction> get action => //...
-}
-```
+  T? build() {
+    return null;
+  }
 
-## Action emitter mixin
+  void emit(T action) {
+    state = action;
+  }
 
-The implementation of the `ActionEmitter` can be delegated to an `ActionEmitterMixin`.
-
-`ActionEmitterMixin` will create and manage the action `Stream` and provide a utility method for sending actions down the stream.
-
-There are multiple `ActionEmitterMixin`s, for mixing into different types of host classes.
-
-```dart
-class HomeScreenPresenter extends ChangeNotifier with ChangeNotifierActionEmitterMixin<HomeScreenAction> {
-  void onInfoPressed() {
-    const action = HomeScreenAction.showInfoDialog();
-    emitAction(action);
+  @override
+  bool updateShouldNotify(T? previous, T? next) {
+    return true;
   }
 }
+
+abstract class ActionProvider {
+  ActionProvider._();
+
+  static AutoDisposeNotifierProvider<ActionNotifier<T>, T?> autoDispose<T>() =>
+      NotifierProvider.autoDispose<ActionNotifier<T>, T?>(() => ActionNotifier<T>());
+}
 ```
 
-## Action listener hook
-
-The `useActionListener` hook provides a handy way to listen to the `ActionEmitter`.
+## Usage
 
 ```dart
-class HomeScreen extends HookConsumerWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreenPresenter extends AutoDisposeNotifier<void> {
+  @override
+  void build() {}
 
+  Future<void> submit() async {
+    try {
+      // ...
+    } on Exception catch (e) {
+      ref.read(homeScreenActionProvider.notifier).emit(HomeScreenAction.showErrorSnackBar(e));
+    }
+  }
+}
+
+final homeScreenActionProvider = ActionProvider.autoDispose<HomeScreenAction>();
+
+@freezed
+class HomeScreenAction with _$HomeScreenAction {
+  const factory HomeScreenAction.showInfoDialog() = _HomeScreenActionShowInfoDialog;
+  const factory HomeScreenAction.showErrorSnackBar(Exception e) = _HomeScreenActionShowErrorSnackBar;
+}
+
+// ---------------------------------------------------------------------------------------------------------
+class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final presenter = ref.watch(homeScreenPresenterProvider);
-
-    useActionListener((CompositeSubscription compositeSubscription) {
-      presenter.action.listen((action) {
-        action.when(
-          showInfoDialog: () => showInfoDialog(context: context),
-          showSuccessToast: () => showSuccessToast(context: context),
-        );
-      }).addTo(compositeSubscription);
+    ref.listen(homeScreenActionProvider, (_, action) {
+      action?.when(
+        showInfoDialog: () => showDialog(...),
+        showErrorSnackBar: (e) => ScaffoldMessenger.of(context).showSnackBar(...),
+      );
     });
-
-    return Container();
+    // ...
   }
 }
 ```
