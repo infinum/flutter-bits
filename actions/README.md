@@ -2,8 +2,6 @@
 
 Actions represent communication between presenter and UI in cases where execution of an action does not change the view tree in a declarative way. This includes navigation, showing dialogs, snack bars, etc.
 
-More about actions can be found in the [handbook](https://infinum.com/handbook/flutter/architecture/communication-between-ui-and-presenter#actions-ui-andlt-presenter).
-
 ## Action
 
 An action represents an operation that should be executed on the UI side.
@@ -88,7 +86,7 @@ class HomeScreen extends ConsumerWidget {
 
 ## Returning result back to presenter
 
-Use `Completer` to pass the result of an action back to the presenter.
+Use `Completer` to pass the result of an action, from UI back to the presenter.
 
 ```dart
 class HomeScreenPresenter extends AutoDisposeNotifier<void> {
