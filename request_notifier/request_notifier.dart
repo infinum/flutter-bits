@@ -1,16 +1,22 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loggy/loggy.dart';
 
 import 'request_state.dart';
 
-abstract class RequestNotifier<Value> extends StateNotifier<RequestState<Value>> with NetworkLoggy {
-  RequestNotifier({RequestState<Value> initial = const RequestState.initial()}) : super(initial);
+abstract class RequestNotifier<Value> extends AutoDisposeNotifier<RequestState<Value>> with NetworkLoggy {
+  RequestNotifier({this.initialState = const RequestState.initial()});
 
-  Future<void> executeRequest({
-    required ValueGetter<Future<Value>> requestBuilder,
+  final RequestState<Value> initialState;
+
+  @override
+  RequestState<Value> build() {
+    return initialState;
+  }
+
+  Future<void> executeRequest(
+    Future<Value> Function() requestBuilder, {
     Object? Function(Object)? errorHandler,
   }) async {
     try {
