@@ -6,13 +6,13 @@ import 'package:loggy/loggy.dart';
 import 'request_state.dart';
 
 abstract class RequestNotifier<Value> extends AutoDisposeNotifier<RequestState<Value>> with NetworkLoggy {
-  RequestNotifier({this.initialState = const RequestState.initial()});
+  RequestNotifier({RequestState<Value> initialState = const RequestState.initial()}) : _initialState = initialState;
 
-  final RequestState<Value> initialState;
+  final RequestState<Value> _initialState;
 
   @override
   RequestState<Value> build() {
-    return initialState;
+    return _initialState;
   }
 
   Future<void> executeRequest(
