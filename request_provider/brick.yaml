@@ -1,7 +1,0 @@
-name: request_provider
-description: Request Provider is addition that helps us execute any long-running async operation, with states initial, loading, success and error.
-
-version: 1.0.0
-
-environment:
-  mason: ">=0.1.0-dev.26 <0.1.0"
