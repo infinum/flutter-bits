@@ -21,17 +21,10 @@ amplify_auth_cognito: <latest_version>
 
 Make sure to replace <latest_version> with the appropriate version numbers.
 
-### 3. Configure AWS Amplify
-Run the following command to configure AWS Amplify for your project:
+### 3. Use Existing Amplify Configuration
+Now you'll need to obtain the JSON configuration file generated after the cloud setup process. Save this file somewhere in your project. Create a new Dart file named amplify_config_dev.dart and copy the contents of the JSON file into it.
 
-```bash
-amplify configure
-```
-
-### 4. Use Existing Amplify Configuration
-After configuring Amplify, you'll need to obtain the JSON configuration file generated in the cloud setup process. Save this file somewhere in your project. Create a new Dart file named amplify_config_dev.dart and copy the contents of the JSON file into it.
-
-### 5. Initialize Amplify
+### 4. Initialize Amplify
 In your project's entry point, typically main.dart, ensure that Amplify is initialized before your app runs. Here's an example of how to configure Amplify:
 
 ```dart
