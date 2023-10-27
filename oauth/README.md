@@ -1,53 +1,51 @@
-# Oauth 2.0 with AWS Cognito
+# Oauth 2.0
 
-Amazon Cognito is a versatile identity platform for web and mobile applications. It serves as a user directory, an authentication server, and an authorization service for OAuth 2.0 access tokens and AWS credentials. With Amazon Cognito, you can easily authenticate and authorize users from various sources, including the built-in user directory, your enterprise directory, and popular consumer identity providers like Google and Facebook.
+For OAuth 2.0 we will use flutter_appauth package:
+[Package](https://pub.dev/packages/flutter_appauth)
 
-# Setup
-To integrate OAuth 2.0 with AWS Cognito in your Flutter application, follow these steps:
-### 1. Set Up AWS Amplify
-Before you begin, make sure you have AWS Amplify installed and configured. If not, you can follow the official AWS Amplify Flutter setup guide here.
-
-### 2. Add Dependencies
-In your project's pubspec.yaml file, add the necessary dependencies for AWS Amplify and Cognito:
-
-```yaml
-dependencies:
-flutter:
-sdk: flutter
-amplify_flutter: <latest_version>
-amplify_auth_cognito: <latest_version>
-# Add other dependencies as needed
+# Use OAuth 2.0
+To integrate OAuth 2.0 in your Flutter application, follow these steps:
+### 1. Initialize FlutterAppAuth
+```dart
+FlutterAppAuth appAuth = FlutterAppAuth();
 ```
 
-Make sure to replace <latest_version> with the appropriate version numbers.
-
-### 3. Use Existing Amplify Configuration
-Now you'll need to obtain the JSON configuration file generated after the cloud setup process. Save this file somewhere in your project. Create a new Dart file named amplify_config_dev.dart and copy the contents of the JSON file into it.
-
-### 4. Initialize Amplify
-In your project's entry point, typically main.dart, ensure that Amplify is initialized before your app runs. Here's an example of how to configure Amplify:
-
+### 2. Use for login
 ```dart
-import 'package:flutter/widgets.dart';
-import 'package:amplify_flutter/amplify.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'amplify_config_dev.dart';
+Future<bool> loginUser() async {
+  final response = await _authRepository.auth(); // Use [FlutterAppAuth.authorizeAndExchangeCode] in repository to get response
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await configureAmplify();
-  runApp(MyApp());
+  // If response is null, something went wrong
+  if (response == null) {
+    loggy.error('Missing AuthorizationTokenRequest');
+    return false;
+  }
+
+  // Save token to persistence manager
+  _tokenPersistenceManager.saveToken(response);
+
+  return true;
 }
+```
 
-Future<void> configureAmplify() async {
-  try {
-    await Amplify.addPlugin(AmplifyAuthCognito());
-    await Amplify.configure(amplifyconfig);
-  } catch (e) {
-    print(e);
+### 3. Use for refresh token
+```dart
+Future<void> _refreshTokenRequest() async {
+  // Get refresh token from persistence manager
+  final refreshToken = _tokenPersistenceManager.getRefreshToken();
+    
+  final authRepository = null; // Get auth repository
+  final response = await authRepository.refreshToken(TokenRequest(
+    '<client_id>',
+    '<redirect_url>',
+    refreshToken: refreshToken,
+    issuer: '<issuer>',
+    clientSecret: '<client_secret>',
+    scopes: ['<scopes>'],
+  ));
+  
+  if (response != null) {
+    _tokenPersistenceManager.saveToken(response);
   }
 }
 ```
-
-### 6. Use Amplify for OAuth 2.0
-For practical examples and usage, refer to the oauth.dart file within your project. This is where you'll implement OAuth 2.0 with AWS Cognito in your Flutter application.
