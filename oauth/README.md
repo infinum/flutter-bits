@@ -1,51 +1,7 @@
-# Oauth 2.0
+# OAuth 2.0
 
-For OAuth 2.0 we will use flutter_appauth package:
-[Package](https://pub.dev/packages/flutter_appauth)
+For OAuth 2.0 use the [flutter_appauth](https://pub.dev/packages/flutter_appauth) package.
 
-# Use OAuth 2.0
-To integrate OAuth 2.0 in your Flutter application, follow these steps:
-### 1. Initialize FlutterAppAuth
-```dart
-FlutterAppAuth appAuth = FlutterAppAuth();
-```
+Check the `oauth.dart` file for an example of how to use the `flutter_appauth` package. Don't forget to follow the native Android/iOS setup as described in the package readme.
 
-### 2. Use for login
-```dart
-Future<bool> loginUser() async {
-  final response = await _authRepository.auth(); // Use [FlutterAppAuth.authorizeAndExchangeCode] in repository to get response
-
-  // If response is null, something went wrong
-  if (response == null) {
-    loggy.error('Missing AuthorizationTokenRequest');
-    return false;
-  }
-
-  // Save token to persistence manager
-  _tokenPersistenceManager.saveToken(response);
-
-  return true;
-}
-```
-
-### 3. Use for refresh token
-```dart
-Future<void> _refreshTokenRequest() async {
-  // Get refresh token from persistence manager
-  final refreshToken = _tokenPersistenceManager.getRefreshToken();
-    
-  final authRepository = null; // Get auth repository
-  final response = await authRepository.refreshToken(TokenRequest(
-    '<client_id>',
-    '<redirect_url>',
-    refreshToken: refreshToken,
-    issuer: '<issuer>',
-    clientSecret: '<client_secret>',
-    scopes: ['<scopes>'],
-  ));
-  
-  if (response != null) {
-    _tokenPersistenceManager.saveToken(response);
-  }
-}
-```
+Clients of `AuthRepository` would usually store the refresh token in persistent storage, this way the user doesn't have to re-login everytime he opens the app.
