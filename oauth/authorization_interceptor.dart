@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 
 class AuthorizationInterceptor extends Interceptor {
-  AuthorizationInterceptor(this._tokenStorage, this._authRepository, this._dio);
+  AuthorizationInterceptor(this._authStorage, this._authRepository, this._dio);
 
-  final TokenStorage _tokenStorage;
+  final AuthStorage _authStorage;
   final AuthRepository _authRepository;
   final Dio _dio;
 
-  Future<void>? _refreshAccessTokenRequest;
+  Future<void>? _refreshAuthRequest;
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    options.headers['Authorization'] = 'Bearer ${_tokenStorage.getAccessToken()}';
+    options.headers['Authorization'] = 'Bearer ${_authStorage.getAccessToken()}';
     super.onRequest(options, handler);
   }
 
@@ -22,34 +22,34 @@ class AuthorizationInterceptor extends Interceptor {
     }
 
     try {
-      await _refreshAccessToken();
+      await _refreshAuth();
     } catch (error) {
-      // Refreshing access token failed. At this point the app would usually navigate to login screen.
+      // Refreshing has failed. At this point the app would usually navigate to login screen.
       return super.onError(err, handler);
     }
 
     handler.resolve(await _retryRequest(err.requestOptions));
   }
 
-  Future<void> _refreshAccessToken() async {
-    // Handling parallel token refreshes.
+  Future<void> _refreshAuth() async {
+    // Handling parallel refreshes.
     var didCreateRequest = false;
-    if (_refreshAccessTokenRequest == null) {
-      _refreshAccessTokenRequest = _createRefreshAccessTokenRequest();
+    if (_refreshAuthRequest == null) {
+      _refreshAuthRequest = _createRefreshAuthRequest();
       didCreateRequest = true;
     }
     try {
-      await _refreshAccessTokenRequest;
+      await _refreshAuthRequest;
     } finally {
       if (didCreateRequest) {
-        _refreshAccessTokenRequest = null;
+        _refreshAuthRequest = null;
       }
     }
   }
 
-  Future<void> _createRefreshAccessTokenRequest() async {
-    final newAccessToken = await _authRepository.fetchAccessToken(_tokenStorage.getRefreshToken());
-    await _tokenStorage.setAccessToken(newAccessToken);
+  Future<void> _createRefreshAuthRequest() async {
+    final newAuthorization = await _authRepository.refresh(_authStorage.getRefreshToken());
+    await _authStorage.save(newAuthorization);
   }
 
   Future<Response> _retryRequest(RequestOptions requestOptions) {
@@ -57,13 +57,23 @@ class AuthorizationInterceptor extends Interceptor {
   }
 }
 
-abstract class TokenStorage {
+abstract class AuthStorage {
   String getRefreshToken();
-
   String getAccessToken();
-  Future<void> setAccessToken(String accessToken);
+
+  Future<void> save(Authorization authorization);
 }
 
 abstract class AuthRepository {
-  Future<String> fetchAccessToken(String refreshToken);
+  Future<Authorization> refresh(String refreshToken);
+}
+
+class Authorization {
+  const Authorization({
+    required this.refreshToken,
+    required this.accessToken,
+  });
+
+  final String refreshToken;
+  final String accessToken;
 }

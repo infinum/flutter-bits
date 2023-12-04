@@ -28,7 +28,7 @@ class AuthRepository {
   }
 
   @override
-  Future<Authorization?> refreshToken(String refreshToken) async {
+  Future<Authorization?> refresh(String refreshToken) async {
     final response = await _auth.token(
       TokenRequest(
         '<client_id>',
